@@ -17,7 +17,9 @@ m ceiling_fan 1024 0.5
 m stationery_supplies 512
 m standing_picture_frame_01 512
 m wooden_bookshelf_worn 1024
-m ArmChair_01 1024
+m coffee_table_round_01 1024
+m CoffeeTable_01 1024
+m wooden_stool_02 512
 m rubber_duck_toy 512
 t wood_floor 1024
 t painted_plaster_wall 1024
