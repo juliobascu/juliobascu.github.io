@@ -7,6 +7,9 @@ on:
   push:
     branches: [main]
     paths: ['.github/workflows/modelos.yml', 'modelos/lista.txt']
+concurrency:
+  group: modelos
+  cancel-in-progress: true
 permissions:
   contents: write
 jobs:
@@ -44,7 +47,18 @@ jobs:
           done
           rm -rf tmp
           ls -la modelos texturas
+      - name: Texturas a webp
+        run: |
+          G=$(npm root -g)
+          NODE_PATH="$G/@gltf-transform/cli/node_modules:$G" node -e '
+          const sharp=require("sharp"),fs=require("fs");
+          (async()=>{for(const f of fs.readdirSync("texturas").filter(f=>f.endsWith(".jpg"))){
+            const rough=f.includes("_Rough"); const out="texturas/"+f.replace(".jpg",".webp");
+            await sharp("texturas/"+f).resize(rough?512:1024).webp({quality:rough?70:80}).toFile(out); fs.unlinkSync("texturas/"+f);
+          }})();'
+          ls -la texturas
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Modelos y texturas de Poly Haven (CC0)
-          file_pattern: 'modelos/*.glb texturas/*.jpg'
+          add_options: '-A'
+          file_pattern: 'modelos texturas'
