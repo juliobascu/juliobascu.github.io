@@ -1,0 +1,50 @@
+# Descarga modelos 3D y texturas CC0 de Poly Haven (polyhaven.com),
+# los optimiza (texturas webp, mallas meshopt) y los guarda en el repo.
+# Se ejecuta al cambiar este archivo o modelos/lista.txt, o a mano.
+name: modelos
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/modelos.yml', 'modelos/lista.txt']
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm i -g @gltf-transform/cli@4.1.1
+      - name: Descargar y optimizar
+        shell: bash
+        run: |
+          set -e
+          UA="portfolio-asset-build"
+          mkdir -p modelos texturas tmp
+          grep -v '^#' modelos/lista.txt | while read tipo id size extra; do
+            [ -z "$id" ] && continue
+            j=$(curl -sf -A "$UA" "https://api.polyhaven.com/files/$id")
+            if [ "$tipo" = "m" ]; then
+              url=$(echo "$j" | jq -r '.gltf["1k"].gltf.url')
+              mkdir -p "tmp/$id"
+              curl -sfL -A "$UA" "$url" -o "tmp/$id/$id.gltf"
+              echo "$j" | jq -r '.gltf["1k"].gltf.include | to_entries[] | "\(.key) \(.value.url)"' | while read p u; do
+                mkdir -p "tmp/$id/$(dirname "$p")"; curl -sfL -A "$UA" "$u" -o "tmp/$id/$p"
+              done
+              if [ -n "$extra" ]; then simp="--simplify true --simplify-ratio $extra --simplify-error 0.002"; else simp="--simplify false"; fi
+              gltf-transform optimize "tmp/$id/$id.gltf" "modelos/$id.glb" --texture-compress webp --texture-size "$size" --compress meshopt $simp < /dev/null
+            else
+              for m in Diffuse nor_gl Rough; do
+                u=$(echo "$j" | jq -r ".${m}[\"1k\"].jpg.url")
+                curl -sfL -A "$UA" "$u" -o "texturas/${id}_${m}.jpg"
+              done
+            fi
+          done
+          rm -rf tmp
+          ls -la modelos texturas
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Modelos y texturas de Poly Haven (CC0)
+          file_pattern: 'modelos/*.glb texturas/*.jpg'
