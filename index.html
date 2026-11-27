@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Julio Bascuñán · Portafolio</title>
-<meta name="description" content="Portafolio de Julio Bascuñán: más de 10 años de proyectos, desde 2015. Juegos, Roblox, sistemas de planta, IA y educación.">
+<meta name="description" content="Portafolio de Julio Bascuñán: digitalización de empresas y aprendizaje gamificado. Más de 80 proyectos desde 2015. Versión gamificada en 3D o versión empresarial.">
 <meta name="theme-color" content="#0d0b1e">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,6 +17,22 @@ canvas#room{position:fixed;inset:0;width:100%;height:100%;display:block;touch-ac
 .vt{font-family:VT323,monospace}
 
 /* ---------- Habitación ---------- */
+#choose{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:16px;background:radial-gradient(ellipse at 70% 30%,#5a2b5e 0%,#24163a 45%,#0d0b1e 100%);transition:opacity .6s}
+#choose.off{opacity:0;pointer-events:none}
+#choose .in{max-width:860px;width:100%;text-align:center;color:#fff}
+#choose h1{font-family:'Press Start 2P',monospace;font-size:clamp(16px,3vw,26px);line-height:1.5;text-shadow:3px 3px 0 #ff2bd6}
+#choose p.s{font-family:VT323,monospace;font-size:24px;color:#ffcf9a;margin:10px 0 26px}
+#choose .opts{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+#choose button{font:inherit;text-align:left;cursor:pointer;border-radius:16px;padding:22px;border:2px solid rgba(255,255,255,.18);color:#fff;transition:transform .15s,border-color .15s;display:flex;flex-direction:column;gap:8px}
+#choose button:hover,#choose button:focus-visible{transform:translateY(-3px);border-color:#ffcf9a;outline:none}
+#choose .g{background:linear-gradient(135deg,rgba(124,77,255,.35),rgba(255,43,214,.25))}
+#choose .e{background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.05));font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#choose .ic{font-size:34px}
+#choose b{font-size:20px}
+#choose .g b{font-family:'Press Start 2P',monospace;font-size:14px;line-height:1.6}
+#choose small{font-size:15px;color:#ddd6ee;line-height:1.45}
+#choose .g small{font-family:VT323,monospace;font-size:20px;line-height:1.15}
+@media (max-width:640px){#choose .opts{grid-template-columns:1fr}#choose button{padding:16px}}
 #loader{position:fixed;inset:0;background:#0d0b1e;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;z-index:50;transition:opacity .8s}
 #loader .bar{width:220px;height:14px;border:2px solid #fff;padding:2px}
 #loader .bar i{display:block;height:100%;width:0;background:#ffb347;transition:width .3s}
@@ -97,7 +113,12 @@ canvas#room{position:fixed;inset:0;width:100%;height:100%;display:block;touch-ac
 .ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;text-shadow:2px 2px 0 rgba(0,0,0,.35)}
 .det{padding:12px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:14px}
 .det .shot{aspect-ratio:16/10;background:#222;position:relative;overflow:hidden}
-.det .shot img{width:100%;height:100%;object-fit:cover;display:block}
+.det .shot img,.det .shot video{width:100%;height:100%;object-fit:cover;display:block;background:#000}
+.det .shot video{object-fit:contain}
+.gal{display:flex;gap:4px;margin-top:6px;overflow-x:auto}
+.gal img{width:64px;height:40px;object-fit:cover;border:2px solid transparent;cursor:pointer;flex:none}
+.gal img.on{border-color:#000080}
+.b95.demo{font-weight:bold;font-size:14px;padding:6px 16px;background:#c8ffc8}
 .det h2{font-size:16px;margin-bottom:6px}
 .det .kv{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:8px 0 10px;font-size:12px}
 .det .kv b{font-weight:normal;color:#444}
@@ -213,12 +234,22 @@ canvas#room{position:fixed;inset:0;width:100%;height:100%;display:block;touch-ac
 <body>
 <canvas id="room" aria-label="Habitación retro en 3D con un computador antiguo"></canvas>
 
+<div id="choose" role="dialog" aria-label="Elige cómo ver el portafolio"><div class="in">
+<h1>JULIO BASCUÑÁN</h1><p class="s">¿Cómo quieres ver mi portafolio?</p>
+<div class="opts">
+<button class="g" id="chG"><span class="ic">🎮</span><b>GAMIFICADA</b><small>Entra a mi habitación de los 90 en 3D: un PC estilo Windows 95, consolas, música y todos mis proyectos.</small></button>
+<button class="e" id="chE"><span class="ic">💼</span><b>Empresarial</b><small>Directa y rápida: digitalización de empresas, aprendizaje gamificado, proyectos con demo y contacto.</small></button>
+</div></div></div>
+<script>(function(){ var c=document.getElementById("choose"); if(/^#(sala|pc|juegos)$/.test(location.hash)){ c.remove(); return; }
+ document.getElementById("chE").onclick=function(){ location.href="empresa/"; };
+ document.getElementById("chG").onclick=function(){ c.classList.add("off"); setTimeout(function(){c.remove()},700); };
+})();</script>
 <div id="loader"><p class="px">CARGANDO HABITACIÓN…</p><div class="bar"><i id="lbar"></i></div><p class="vt" style="font-size:20px;letter-spacing:0">Desde 1985</p></div>
 <div id="hint" class="vt">🖱️ Haz clic en el PC para entrar · explora los objetos</div>
 <script>if(matchMedia("(pointer:coarse)").matches)document.getElementById("hint").textContent="👆 Toca el PC o los objetos · desliza para mirar";</script>
 <div id="hud">
   <div class="who"><b class="px">JULIO BASCUÑÁN</b><span class="vt">Desarrollador · Arica, Chile · nacido en 1985</span></div>
-  <div class="acts"><button class="rbtn alt" id="bMusic">♪ MÚSICA</button><button class="rbtn alt" id="bGames">🎮 JUEGOS</button><button class="rbtn" id="bEnter">ENCENDER PC ▶</button></div>
+  <div class="acts"><a class="rbtn alt" href="empresa/" style="text-decoration:none">💼 EMPRESAS</a><button class="rbtn alt" id="bMusic">♪ MÚSICA</button><button class="rbtn alt" id="bGames">🎮 JUEGOS</button><button class="rbtn" id="bEnter">ENCENDER PC ▶</button></div>
 </div>
 <div id="tip" class="px"></div>
 <div id="toast" class="vt"></div>
@@ -266,7 +297,7 @@ const ERAS = [
   {id:"2025", yr:"2025", t:"Sistemas completos", d:"Tesis Atenas 2.0, IA local, IoT y más de 20 apps en uso en planta."},
   {id:"2026", yr:"2026", t:"Proyectos grandes", d:"Plataformas educativas en línea, juegos multijugador y Roblox publicado."},
 ];
-// id, era, nombre, descripción, categoría, tecnologías, extras {star, live, priv}
+// id, era, nombre, descripción, categoría, tecnologías, extras {star, live, priv, play, demo2:[texto,url], shots:N (capturas/<id>-2.png ... -N.png), vid:1 (capturas/<id>.mp4)}
 const P = [
  ["contador","2015","Contador 0 a 9999","Mi primer programa: un contador.","web",["Programación básica"]],
  ["rtype","2015","R-Type","Shooter espacial de naves con sprites propios.","juego",["Construct 2"]],
@@ -321,14 +352,14 @@ const P = [
  ["ultimate-stat","2025","Ultimate Stat Simulator","Simulador: +1 a tus estadísticas cada segundo.","juego",["Roblox","Luau"],{play:"https://www.roblox.com/games/135170421937613"}],
  ["julioflix","2025","Julioflix","Catálogo de películas estilo streaming.","web",["Web"]],
 
- ["pixelito","2026","Pixelito","Creador de juegos para niños con voz, tutoriales y cuaderno.","edu",["React","Supabase","Voz"],{star:1,live:"https://pixelito.vercel.app"}],
- ["robopy","2026","RoboPy","Aprende Python programando un robot, en 49 niveles.","edu",["Python","Web"],{star:1,live:1}],
+ ["pixelito","2026","Pixelito","Creador de juegos para niños con voz, tutoriales y cuaderno.","edu",["React","Supabase","Voz"],{star:1,live:"https://pixelito.vercel.app",demo2:["🎨 Taller de juegos","https://taller-de-juegos.vercel.app"]}],
+ ["robopy","2026","RoboPy","Aprende Python programando un robot, en 49 niveles.","edu",["Python","Web"],{star:1,live:"https://robopy.vercel.app"}],
  ["veil-hunters","2026","Veil Hunters RPG","RPG de acción publicado en Roblox.","juego",["Roblox","Luau"],{star:1,play:"https://www.roblox.com/games/118352655800846"}],
  ["atenas-hexagon","2026","Atenas Hexagon","Capacitación técnica: laboratorio 3D de cableado, evaluación por roles, PWA.","edu",["React","3D","PWA"],{star:1,priv:1}],
  ["hacienda-pixel","2026","Hacienda Pixel","Juego incremental de hacienda multijugador.","juego",["Node.js","PostgreSQL"],{star:1}],
  ["viento-bound","2026","Viento Bound","Artillería por turnos multijugador para celular.","juego",["Node.js","WebSockets"],{star:1}],
  ["chauchera","2026","Chauchera","App de micropagos.","web",["Next.js","Supabase"]],
- ["sap-academy","2026","SAP Academy","Curso de SAP en la web.","edu",["Next.js","Supabase"]],
+ ["sap-academy","2026","SAP Academy","Curso de SAP en la web.","edu",["Next.js","Supabase"],{live:"https://sap-academy-gray.vercel.app"}],
  ["arce-online","2026","Arce Online","RPG de plataformas multijugador para celular.","juego",["Node.js","WebSockets"]],
  ["mina","2026","Mina Incremental","Juego idle de minería con guardado en la nube.","juego",["React","TypeScript","Supabase"]],
  ["autochecklist","2026","AutoChecklist","Audio y fotos → informe con Gemini → un robot llena el portal.","ia",["Gemini","Playwright"]],
@@ -474,18 +505,27 @@ function openProject(id){
   const p=byId[id]; if(!p)return;
   let acts="";
   if(p.play) acts+=`<a class="b95 pri" href="${p.play}" target="_blank" rel="noopener">▶ Jugar en Roblox</a>`;
-  if(typeof p.live==="string") acts+=`<a class="b95 pri" href="${p.live}" target="_blank" rel="noopener">🌐 Abrir en línea</a>`;
+  if(typeof p.live==="string") acts+=`<a class="b95 pri demo" href="${p.live}" target="_blank" rel="noopener">▶ Probar demo</a>`;
+  if(p.demo2) acts+=`<a class="b95" href="${p.demo2[1]}" target="_blank" rel="noopener">${esc(p.demo2[0])} ↗</a>`;
+  if(p.vid) acts+=`<button class="b95" data-vid>🎬 Ver video</button>`;
   let note="";
   if(p.live===1) note=`<div class="note">✅ Publicado y en uso.</div>`;
   if(p.priv) note=`<div class="note">🔒 Uso interno: es un sistema de una empresa, por eso no tiene enlace público.</div>`;
   if(p.privado) note=`<div class="note">🧪 Privado: está en desarrollo o es una prueba, todavía no se puede jugar.</div>`;
+  if(!p.play&&typeof p.live!=="string"&&!p.vid&&!p.priv&&!p.privado&&!p.nojugable) note=`<div class="note">📷 Este proyecto no tiene versión en línea. Aquí ves sus capturas.</div>`;
+  if(p.priv&&p.vid) note=`<div class="note">🔒 Uso interno: no tiene enlace público, pero puedes ver el video de demostración.</div>`;
   if(p.nojugable) note=`<div class="note">💤 Mi primer juego de Roblox. Hoy está marcado como no jugable.</div>`;
-  const html=`<div class="det"><div class="shot bevin">${thumb(p)}</div><div><h2>${esc(p.name)}</h2>
+  const html=`<div class="det"><div><div class="shot bevin">${thumb(p)}</div>${gallery(p)}</div><div><h2>${esc(p.name)}</h2>
     <div class="kv"><b>Año:</b><span>${eraName(p.era)}</span><b>Tipo:</b><span>${(CAT[p.cat]||{}).em||""} ${esc((CAT[p.cat]||{}).n||"")}</span></div>
     <p>${esc(p.desc)}</p><div class="chips">${p.tech.map(t=>`<span class="chip bev">${esc(t)}</span>`).join("")}</div>${note}
     <div class="acts">${acts}<button class="b95" data-close>Aceptar</button></div></div></div>`;
-  openWin("p-"+id,"Propiedades de "+p.name,(CAT[p.cat]||{}).em||"💾",html,{w:720,h:430,menu:false,onOpen(el){ el.querySelector("[data-close]").onclick=()=>closeWin("p-"+id); }});
+  openWin("p-"+id,"Propiedades de "+p.name,(CAT[p.cat]||{}).em||"💾",html,{w:720,h:430,menu:false,onOpen(el){ el.querySelector("[data-close]").onclick=()=>closeWin("p-"+id);
+    const sh=el.querySelector(".shot");
+    el.querySelectorAll(".gal img").forEach(g=>g.onclick=()=>{ el.querySelectorAll(".gal img").forEach(x=>x.classList.remove("on")); g.classList.add("on"); sh.innerHTML=`<img src="${g.src}" alt="">`; });
+    const vb=el.querySelector("[data-vid]"); if(vb) vb.onclick=()=>{ sh.innerHTML=`<video src="capturas/${p.id}.mp4" controls autoplay playsinline muted></video>`; };
+  }});
 }
+function gallery(p){ if(!p.shots||p.shots<2) return ""; let h=`<div class="gal"><img class="on" src="capturas/${p.id}.png" onerror="this.src='capturas/${p.id}.jpg'" alt="">`; for(let i=2;i<=p.shots;i++) h+=`<img src="capturas/${p.id}-${i}.png" onerror="this.onerror=null;this.src='capturas/${p.id}-${i}.jpg'" loading="lazy" alt="">`; return h+"</div>"; }
 function openTimeline(){
   const html=ERAS.map(e=>{ const items=P.filter(p=>p.era===e.id); return `<div class="era"><h3>${esc(e.t)} <small>${e.yr} · ${items.length} proyectos</small></h3><p>${esc(e.d)}</p><div class="mini">${items.map(p=>`<span class="bev" data-p="${p.id}">${(CAT[p.cat]||{}).em||""} ${esc(p.name)}</span>`).join("")}</div></div>`}).join("");
   openWin("timeline","Línea de tiempo","📅",html,{w:700,h:520,addr:"C:\\Mis documentos\\Evolución 2015-2026",status:`${P.length} proyectos en ${ERAS.length} etapas`,status2:"Desde 2015",onOpen(el){ el.querySelectorAll("[data-p]").forEach(n=>n.onclick=()=>openProject(n.dataset.p)); }});
@@ -527,7 +567,7 @@ de minas y una canción. Busca en el escritorio.`;
   openWin("about","Léeme.txt - Bloc de notas","📝",`<div class="txt">${txt}</div>`,{w:520,h:540});
 }
 function openContact(){
-  openWin("contact","Contacto","✉️",`<div style="padding:16px;display:flex;gap:14px;align-items:flex-start"><div style="font-size:40px">📨</div><div style="line-height:1.5"><b>¿Construimos algo juntos?</b><br>Julio Bascuñán · Arica, Chile<br><br><div class="acts"><a class="b95 pri" href="https://github.com/juliobascu" target="_blank" rel="noopener">GitHub ↗</a><button class="b95" data-c>Cerrar</button></div></div></div>`,{w:400,h:210,menu:false,white:false,onOpen(el){el.querySelector("[data-c]").onclick=()=>closeWin("contact")}});
+  openWin("contact","Contacto","✉️",`<div style="padding:16px;display:flex;gap:14px;align-items:flex-start"><div style="font-size:40px">📨</div><div style="line-height:1.5"><b>¿Construimos algo juntos?</b><br>Julio Bascuñán · Arica, Chile<br>📧 <a href="mailto:contacto@navigram.cl">contacto@navigram.cl</a><br><br><div class="acts"><a class="b95 pri" href="https://www.navigram.cl" target="_blank" rel="noopener">navigram.cl ↗</a><a class="b95" href="https://github.com/juliobascu" target="_blank" rel="noopener">GitHub ↗</a><a class="b95" href="empresa/">💼 Versión empresarial</a><button class="b95" data-c>Cerrar</button></div></div></div>`,{w:460,h:250,menu:false,white:false,onOpen(el){el.querySelector("[data-c]").onclick=()=>closeWin("contact")}});
 }
 function openTrash(){
   openWin("trash","Papelera de reciclaje","🗑️",`<div style="padding:30px 16px;text-align:center;color:#444;line-height:1.6">La papelera está vacía.<br><small>Aquí no se borra nada sin preguntar 😉</small></div>`,{w:380,h:220,status:"0 objeto(s)"});
@@ -718,11 +758,11 @@ const canvas=document.getElementById("room");
 const renderer=new THREE.WebGLRenderer({canvas,antialias:!MOBILE,powerPreference:"high-performance"});
 renderer.setPixelRatio(Math.min(devicePixelRatio, MOBILE?1.5:2));
 renderer.setSize(innerWidth,innerHeight,false);
-renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.05;
+renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.18;
 renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 
 const scene=new THREE.Scene();
-scene.background=new THREE.Color(0x0b0918);
+scene.background=new THREE.Color(0x1c1224);
 const camera=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,.02,40);
 const ENV_I=.28;
 { const pm=new THREE.PMREMGenerator(renderer); scene.environment=pm.fromScene(new RoomEnvironment(renderer),.04).texture; pm.dispose(); }
@@ -751,16 +791,16 @@ function pbr(id,rx,ry,o={}){ const set=e=>{ const c=e.t.clone(); c.repeat.set(rx
 
 /* ---------- modelos glTF (Poly Haven, CC0) ---------- */
 const GL=new GLTFLoader(); GL.setMeshoptDecoder(MeshoptDecoder);
-const jobs=[];
+const jobs=[]; const pops=[]; let booted=false;
 function model(id,{p=[0,0,0],r=0,rx=0,rz=0,s=1,parent=scene,shadow=true,cb}={}){
   const g=new THREE.Group(); g.position.set(...p); g.rotation.set(rx,r,rz); g.scale.setScalar(s); parent.add(g);
-  jobs.push(GL.loadAsync("modelos/"+id+".glb").then(gl=>{ gl.scene.traverse(o=>{ if(o.isMesh){ o.castShadow=shadow; o.receiveShadow=true; (Array.isArray(o.material)?o.material:[o.material]).forEach(m=>{ m.envMapIntensity=ENV_I; }); } }); g.add(gl.scene); g.userData.loaded=true; cb&&cb(gl.scene,g); }).catch(e=>console.warn("modelo",id,e)));
+  jobs.push(GL.loadAsync("modelos/"+id+".glb").then(gl=>{ gl.scene.traverse(o=>{ if(o.isMesh){ o.castShadow=shadow; o.receiveShadow=true; (Array.isArray(o.material)?o.material:[o.material]).forEach(m=>{ m.envMapIntensity=ENV_I; }); } }); g.add(gl.scene); g.userData.loaded=true; cb&&cb(gl.scene,g); const bs=gl.scene.scale.clone(); if(booted){ gl.scene.scale.multiplyScalar(.001); pops.push({o:gl.scene,bs,t:0}); } }).catch(e=>console.warn("modelo",id,e)));
   return g;
 }
 
 /* ================== HABITACIÓN ================== */
 const RW=3.2, BACK=-.76, FRONT=3.7, CEIL=2.9;
-const wallTint=0x8676b8;
+const wallTint=0xae98ae;
 const wallM=(rx,ry)=>pbr("painted_plaster_wall",rx,ry,{color:wallTint});
 const back=new THREE.Mesh(new THREE.PlaneGeometry(RW*2,CEIL),wallM(4,2)); back.position.set(0,CEIL/2,BACK); back.receiveShadow=true; scene.add(back);
 const sideD=FRONT-BACK;
@@ -1001,17 +1041,18 @@ pick(neon,"neon","✨ NEÓN");
 const WIN={x:1.25,y:1.85,w:.95,h:.8};
 const city=ctex(512,432,()=>{});
 const cityBase=document.createElement("canvas"); cityBase.width=512; cityBase.height=432;
-{ const x=cityBase.getContext("2d"); const g=x.createLinearGradient(0,0,0,432); g.addColorStop(0,"#070726");g.addColorStop(.7,"#1b1a5a");g.addColorStop(1,"#3a2a7a"); x.fillStyle=g;x.fillRect(0,0,512,432);
-  x.fillStyle="#fff"; for(let i=0;i<70;i++){x.globalAlpha=Math.random()*.8;x.fillRect(Math.random()*512,Math.random()*200,1.5,1.5)} x.globalAlpha=1;
-  x.fillStyle="#f6f0d0"; x.beginPath(); x.arc(400,80,30,0,7); x.fill(); x.fillStyle="#070726"; x.beginPath(); x.arc(388,72,28,0,7); x.fill();
-  for(let layer=0;layer<2;layer++){ let bx=-10; while(bx<512){ const bw=30+Math.random()*50, bh=(layer?120:190)+Math.random()*120; x.fillStyle=layer?"#0b0a24":"#161447"; x.fillRect(bx,432-bh,bw,bh);
-    for(let wy=432-bh+8;wy<424;wy+=14)for(let wx=bx+5;wx<bx+bw-6;wx+=10){ if(Math.random()<.35){x.fillStyle=["#ffd447","#ffb347","#7ff9ff","#ff8ad8"][Math.random()*4|0];x.globalAlpha=layer?.95:.5;x.fillRect(wx,wy,5,7);x.globalAlpha=1} }
+{ const x=cityBase.getContext("2d"); const g=x.createLinearGradient(0,0,0,432); g.addColorStop(0,"#3a2a6e");g.addColorStop(.35,"#b24f86");g.addColorStop(.62,"#ff8a5c");g.addColorStop(.82,"#ffc77a");g.addColorStop(1,"#ffe0a0"); x.fillStyle=g;x.fillRect(0,0,512,432);
+  const sg=x.createRadialGradient(330,285,0,330,285,170); sg.addColorStop(0,"rgba(255,245,200,1)"); sg.addColorStop(.18,"rgba(255,220,150,.9)"); sg.addColorStop(.45,"rgba(255,160,100,.35)"); sg.addColorStop(1,"rgba(255,120,90,0)"); x.fillStyle=sg; x.fillRect(0,0,512,432);
+  x.fillStyle="#fff6d8"; x.beginPath(); x.arc(330,285,30,0,7); x.fill();
+  x.globalAlpha=.55; [[60,70,150],[250,40,190],[380,120,140],[120,160,170]].forEach(([cx,cy,w])=>{ const cg=x.createLinearGradient(0,cy-8,0,cy+10); cg.addColorStop(0,"#ffb3a0"); cg.addColorStop(1,"#a04a80"); x.fillStyle=cg; x.beginPath(); x.ellipse(cx,cy,w/2,9,0,0,7); x.ellipse(cx+w*.2,cy-6,w/3,8,0,0,7); x.fill(); }); x.globalAlpha=1;
+  for(let layer=0;layer<2;layer++){ let bx=-10; while(bx<512){ const bw=30+Math.random()*50, bh=(layer?110:170)+Math.random()*110; x.fillStyle=layer?"#2a1838":"#5a3358"; x.fillRect(bx,432-bh,bw,bh);
+    for(let wy=432-bh+8;wy<424;wy+=14)for(let wx=bx+5;wx<bx+bw-6;wx+=10){ if(Math.random()<.14){x.fillStyle=["#ffd447","#ffb347"][Math.random()*2|0];x.globalAlpha=layer?.8:.35;x.fillRect(wx,wy,5,7);x.globalAlpha=1} }
     bx+=bw+4; } } }
 const drops=[...Array(90)].map(()=>({x:Math.random()*512,y:Math.random()*432,s:6+Math.random()*8,l:10+Math.random()*14}));
-let raining=true;
+let raining=false;
 function drawCity(){ const x=city.userData.x; x.drawImage(cityBase,0,0); if(raining){ x.strokeStyle="rgba(180,200,255,.45)"; x.lineWidth=1.2; x.beginPath(); drops.forEach(d=>{ d.y+=d.s; d.x-=d.s*.15; if(d.y>432){d.y=-20;d.x=Math.random()*560} x.moveTo(d.x,d.y); x.lineTo(d.x-d.l*.15,d.y+d.l); }); x.stroke(); } city.needsUpdate=true; }
 const winG=grp(WIN.x,WIN.y,-.745);
-winG.add(new THREE.Mesh(new THREE.PlaneGeometry(WIN.w,WIN.h),new THREE.MeshBasicMaterial({map:city,toneMapped:false})));
+winG.add(new THREE.Mesh(new THREE.PlaneGeometry(WIN.w,WIN.h),new THREE.MeshBasicMaterial({map:city,color:0xbfb0b0,toneMapped:false})));
 { const glassW=new THREE.Mesh(new THREE.PlaneGeometry(WIN.w,WIN.h),new THREE.MeshPhysicalMaterial({color:0xffffff,transparent:true,opacity:.08,roughness:.05,metalness:0,envMapIntensity:1})); glassW.position.z=.015; winG.add(glassW); }
 const frameM=M(0xe9dfc8,{roughness:.5});
 box(WIN.w+.08,.04,.05,frameM,0,WIN.h/2+.02,.02,winG); box(WIN.w+.12,.05,.14,frameM,0,-WIN.h/2-.03,.05,winG);
@@ -1020,10 +1061,14 @@ const blinds=new THREE.Group(); winG.add(blinds);
 for(let i=0;i<8;i++){ const s=box(WIN.w,.022,.004,M(0xd8d2c2,{roughness:.7}),0,WIN.h/2-.03-i*.028,.06,blinds); s.rotation.x=1.1; s.castShadow=false; }
 // cortinas
 { const cm=M(0x6b2a5e,{roughness:.95,side:THREE.DoubleSide}); [-1,1].forEach(s=>{ const geo=new THREE.PlaneGeometry(.28,1.25,14,1); const p=geo.attributes.position; for(let i=0;i<p.count;i++){ p.setZ(i,Math.sin(p.getX(i)*44)*.025); } geo.computeVertexNormals(); const c=SH(new THREE.Mesh(geo,cm)); c.position.set(s*(WIN.w/2+.17),-.1,.07); winG.add(c); }); rod([-WIN.w/2-.35,WIN.h/2+.1,.08],[WIN.w/2+.35,WIN.h/2+.1,.08],.01,M(0x3b2618),winG); }
-const moon=new THREE.DirectionalLight(0x7f8cff,1.0); moon.position.set(1.6,2.6,-2.2); moon.target.position.set(.4,.4,.8); scene.add(moon,moon.target);
-moon.castShadow=!MOBILE; moon.shadow.mapSize.set(1024,1024); moon.shadow.camera.left=-2.5; moon.shadow.camera.right=2.5; moon.shadow.camera.top=2.5; moon.shadow.camera.bottom=-2.5; moon.shadow.bias=-.0008; moon.shadow.radius=6;
-const windowGlow=new THREE.PointLight(0x5865ff,1.2,2.5,2); windowGlow.position.set(WIN.x,WIN.y-.1,-.4); scene.add(windowGlow);
+const moon=new THREE.DirectionalLight(0xffa062,2.6); moon.position.set(2.0,2.55,-2.6); moon.target.position.set(.55,.25,1.1); scene.add(moon,moon.target);
+moon.castShadow=!MOBILE; moon.shadow.mapSize.set(2048,2048); moon.shadow.camera.left=-2.5; moon.shadow.camera.right=2.5; moon.shadow.camera.top=2.5; moon.shadow.camera.bottom=-2.5; moon.shadow.bias=-.0008; moon.shadow.radius=6;
+const windowGlow=new THREE.PointLight(0xff9a5a,2.2,3,2); windowGlow.position.set(WIN.x,WIN.y-.1,-.4); scene.add(windowGlow);
 pick(winG,"rain","🌧️ LLUVIA");
+/* rayos de sol (haces de luz suaves) */
+const shaftTex=(()=>{ const c=document.createElement("canvas"); c.width=64; c.height=256; const x=c.getContext("2d"); const g=x.createLinearGradient(0,0,0,256); g.addColorStop(0,"rgba(255,200,140,.9)"); g.addColorStop(.6,"rgba(255,170,110,.25)"); g.addColorStop(1,"rgba(255,150,100,0)"); x.fillStyle=g; x.fillRect(0,0,64,256); const h=x.createLinearGradient(0,0,64,0); h.addColorStop(0,"rgba(0,0,0,1)"); h.addColorStop(.25,"rgba(0,0,0,0)"); h.addColorStop(.75,"rgba(0,0,0,0)"); h.addColorStop(1,"rgba(0,0,0,1)"); x.globalCompositeOperation="destination-out"; x.fillStyle=h; x.fillRect(0,0,64,256); const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; return t; })();
+const shafts=[];
+[[-.22,.11],[.0,.14],[.24,.09]].forEach(([dx,op])=>{ const geo=new THREE.PlaneGeometry(.42,2.6); geo.translate(0,-1.3,0); const m=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({map:shaftTex,transparent:true,opacity:op,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide,toneMapped:false})); m.position.set(WIN.x+dx,WIN.y+.15,BACK+.06); m.rotation.set(-.72,-.32,.06); m.userData.op=op; m.renderOrder=5; scene.add(m); shafts.push(m); });
 
 /* ---------- repisa de consolas (modelo) ---------- */
 const SHELF={x:2.3,z:BACK+.19};
@@ -1257,8 +1302,8 @@ dg.setAttribute("position",new THREE.BufferAttribute(dp,3));
 scene.add(new THREE.Points(dg,new THREE.PointsMaterial({color:0xffd9a0,size:.008,transparent:true,opacity:.5,depthWrite:false,blending:THREE.AdditiveBlending,map:puff})));
 
 /* ---------- luz general cálida ---------- */
-scene.add(new THREE.HemisphereLight(0x9c90d8,0x3a2a22,.5));
-const warm=new THREE.PointLight(0xffc28a,2.4,7,1.6); warm.position.set(.2,2.05,1.6); scene.add(warm);
+scene.add(new THREE.HemisphereLight(0xffd0b0,0x46302a,.6));
+const warm=new THREE.PointLight(0xffc896,2.8,7.5,1.6); warm.position.set(.2,2.05,1.6); scene.add(warm);
 const musicLight=new THREE.PointLight(0xff8a4a,1.2,2.6,2); musicLight.position.set(-2.1,1.9,.2); scene.add(musicLight);
 const shelfLight=new THREE.PointLight(0xffd9a8,.9,2,2); shelfLight.position.set(2.3,1.9,.1); scene.add(shelfLight);
 
@@ -1305,9 +1350,9 @@ function pianoRun(){ [60,64,67,72,76,79,84,79,76,72].forEach((n,i)=>tone(mf(n),.
 
 /* ---------- postproceso ---------- */
 let composer=null, gtao=null;
-if(!MOBILE){ composer=new EffectComposer(renderer); composer.addPass(new RenderPass(scene,camera));
-  try{ gtao=new GTAOPass(scene,camera,innerWidth,innerHeight); gtao.output=GTAOPass.OUTPUT.Default; gtao.blendIntensity=.85; gtao.updateGtaoMaterial({radius:.35,distanceExponent:1.5,thickness:1,scale:1.2,samples:12}); gtao.updatePdMaterial({lumaPhi:10,depthPhi:2,normalPhi:3,radius:6,rings:2,samples:12}); composer.addPass(gtao); }catch(e){ console.warn(e); gtao=null; }
-  composer.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),.38,.55,.9)); composer.addPass(new OutputPass()); }
+{ composer=new EffectComposer(renderer); composer.addPass(new RenderPass(scene,camera));
+  if(!MOBILE) try{ gtao=new GTAOPass(scene,camera,innerWidth,innerHeight); gtao.output=GTAOPass.OUTPUT.Default; gtao.blendIntensity=.85; gtao.updateGtaoMaterial({radius:.35,distanceExponent:1.5,thickness:1,scale:1.2,samples:12}); gtao.updatePdMaterial({lumaPhi:10,depthPhi:2,normalPhi:3,radius:6,rings:2,samples:12}); composer.addPass(gtao); }catch(e){ console.warn(e); gtao=null; }
+  composer.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth/(MOBILE?2:1),innerHeight/(MOBILE?2:1)),MOBILE?.3:.6,MOBILE?.5:.75,MOBILE?.88:.78)); composer.addPass(new OutputPass()); }
 
 /* ---------- cámara ---------- */
 const REST={}, look=new THREE.Vector3(), camPos=new THREE.Vector3();
@@ -1428,6 +1473,8 @@ function frame(){
   if(anim.d20>0){ anim.d20=Math.max(0,anim.d20-dt*1.4); const d=dnd.userData.d20; d.position.y=DT+.016+Math.sin(anim.d20*Math.PI)*.12; d.rotation.x+=dt*18*anim.d20; d.rotation.z+=dt*13*anim.d20; }
   ant.material.color.setHex((t*2|0)%2?0xff4f7a:0x661f33);
   fan.rotation.y+=dt*1.6;
+  for(let i=pops.length-1;i>=0;i--){ const q=pops[i]; q.t=Math.min(1,q.t+dt*2.5); const k=1-Math.pow(1-q.t,3); q.o.scale.copy(q.bs).multiplyScalar(.001+k*.999); if(q.t>=1) pops.splice(i,1); }
+  shafts.forEach((m,i)=>{ m.material.opacity=m.userData.op*(.85+.15*Math.sin(t*.6+i*1.7)); });
   const pa=dg.attributes.position; for(let i=0;i<dustN;i++){ let y=pa.getY(i)+dt*.015*(1+(i%3)); if(y>2.4)y=.8; pa.setY(i,y); pa.setX(i,pa.getX(i)+Math.sin(t*.3+i)*.0004); } pa.needsUpdate=true;
   picks.forEach(o=>{ const target=(o===hover?1.035:1)*(1+(o.userData.bump||0)*.05); o.userData.bump=Math.max(0,(o.userData.bump||0)-dt*3); const s=o.userData.baseScale; if(o.position.lengthSq()===0)return; o.scale.lerp(new THREE.Vector3(s.x*target,s.y*target,s.z*target),.2); });
   if(composer) composer.render(); else renderer.render(scene,camera);
@@ -1436,11 +1483,12 @@ function frame(){
 /* ---------- arranque ---------- */
 lbar.style.width="45%";
 (async()=>{
-  try{ await Promise.race([Promise.all([document.fonts.load("16px 'Press Start 2P'"),document.fonts.load("20px VT323")]),new Promise(r=>setTimeout(r,2500))]); }catch(e){}
+  try{ await Promise.race([Promise.all([document.fonts.load("16px 'Press Start 2P'"),document.fonts.load("20px VT323")]),new Promise(r=>setTimeout(r,1200))]); }catch(e){}
   texList.forEach(t=>{ const {x,c,draw}=t.userData; x.clearRect(0,0,c.width,c.height); draw(x,c.width,c.height); t.needsUpdate=true; });
   tvInit(); drawScreen(0); drawGB(0); drawCity(); drawTV(0);
-  let done=0; jobs.forEach(j=>j.then(()=>{ done++; lbar.style.width=(45+50*done/jobs.length)+"%"; }));
-  await Promise.race([Promise.all([...jobs,...texJobs]),new Promise(r=>setTimeout(r,MOBILE?7000:9000))]);
+  let done=0; texJobs.forEach(j=>j.then(()=>{ done++; lbar.style.width=(45+50*done/texJobs.length)+"%"; }));
+  await Promise.race([Promise.all(texJobs),new Promise(r=>setTimeout(r,MOBILE?3000:2500))]);
+  booted=true;
   try{ renderer.compile(scene,camera); }catch(e){}
   lbar.style.width="100%";
   clearTimeout(window.__fallback);
