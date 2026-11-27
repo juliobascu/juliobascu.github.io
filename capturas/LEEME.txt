@@ -1,0 +1,1 @@
+Capturas: nombra cada imagen como el id del proyecto (ver lista en index.html), ej. pixelito.png
