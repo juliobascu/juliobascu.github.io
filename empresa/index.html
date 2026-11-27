@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Julio Bascuñán · Digitalización y gamificación</title>
+<meta name="description" content="Julio Bascuñán: desarrollo de software para digitalizar empresas y plataformas de aprendizaje gamificado. Arica, Chile.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbfaf8;--bg2:#f2efea;--card:#fff;--ink:#16161d;--ink2:#555463;--line:#e4e0d8;--acc:#e8673a;--acc2:#7c4dff;--ok:#178a52;--sh:0 1px 2px rgba(20,20,30,.05),0 8px 24px rgba(20,20,30,.06)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121218;--bg2:#1a1a22;--card:#1e1e27;--ink:#f1f0f5;--ink2:#a9a8b8;--line:#2d2d39;--acc:#ff8a5c;--acc2:#a68bff;--ok:#41c785;--sh:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25)}}
+:root[data-theme="dark"]{--bg:#121218;--bg2:#1a1a22;--card:#1e1e27;--ink:#f1f0f5;--ink2:#a9a8b8;--line:#2d2d39;--acc:#ff8a5c;--acc2:#a68bff;--ok:#41c785;--sh:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:20px;height:60px}
+nav .brand{font-weight:800;text-decoration:none;letter-spacing:-.01em}
+nav .links{display:flex;gap:18px;margin-left:auto;font-size:14px}
+nav .links a{text-decoration:none;color:var(--ink2)} nav .links a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--sh)}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn.sm{padding:8px 13px;font-size:13.5px;border-radius:8px}
+.btn.play{background:var(--ok);border-color:var(--ok);color:#fff}
+header.hero{padding:72px 0 56px}
+.hero .eyebrow{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--acc)}
+.hero h1{font-size:clamp(34px,5.4vw,58px);line-height:1.05;letter-spacing:-.03em;margin:14px 0 18px;font-weight:800;max-width:16ch}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{font-size:clamp(17px,2vw,20px);color:var(--ink2);max-width:60ch}
+.hero .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:44px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.stat b{display:block;font-size:28px;letter-spacing:-.02em}
+.stat span{font-size:13.5px;color:var(--ink2)}
+section{padding:60px 0;border-top:1px solid var(--line)}
+section h2{font-size:clamp(26px,3.4vw,36px);letter-spacing:-.02em;line-height:1.15}
+section .sub{color:var(--ink2);margin-top:8px;max-width:62ch}
+.areas{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:28px}
+.area{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px}
+.area .ic{font-size:26px}
+.area h3{font-size:19px;margin:8px 0 6px}
+.area p{color:var(--ink2);font-size:15px}
+.area ul{margin:10px 0 0 18px;font-size:14.5px;color:var(--ink2)}
+.nav-card{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:center;background:linear-gradient(135deg,#16162a,#2a1a3e);color:#fff;border-radius:20px;padding:32px;margin-top:28px}
+.nav-card p{color:#d6d3e6}
+.nav-card .svc{display:flex;flex-wrap:wrap;gap:8px}
+.nav-card .svc span{font-size:13px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15)}
+.nav-card .btn{background:#fff;color:#16162a;border-color:#fff;margin-top:18px}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.tab{padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);font:inherit;font-size:14px;font-weight:500;color:var(--ink2);cursor:pointer}
+.tab.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+.pc{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.pc .im{aspect-ratio:16/10;background:var(--bg2);position:relative;overflow:hidden}
+.pc .im img{width:100%;height:100%;object-fit:cover;display:block}
+.pc .im .ph{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-size:40px}
+.pc .im .badge{position:absolute;top:10px;left:10px;font-size:12px;font-weight:600;padding:4px 9px;border-radius:999px;background:rgba(0,0,0,.65);color:#fff}
+.pc .bd{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.pc h3{font-size:17px}
+.pc .yr{font-size:12.5px;color:var(--ink2)}
+.pc p{font-size:14.5px;color:var(--ink2)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;padding:3px 8px;border-radius:6px;background:var(--bg2);color:var(--ink2)}
+.pc .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:6px}
+.pc .priv{font-size:13px;color:var(--ink2)}
+.tl{margin-top:28px;display:grid;gap:0}
+.tl .it{display:grid;grid-template-columns:120px 1fr;gap:20px;padding:18px 0;border-bottom:1px dashed var(--line)}
+.tl .it b{font-size:15px}
+.tl .it h3{font-size:17px}
+.tl .it p{color:var(--ink2);font-size:15px}
+.tech{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.tech span{padding:7px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);font-size:14px}
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px}
+.contact a.box{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+.contact a.box small{display:block;color:var(--ink2);font-size:13px}
+.contact a.box b{font-size:17px}
+.room{display:flex;align-items:center;gap:18px;flex-wrap:wrap;background:var(--bg2);border-radius:16px;padding:22px;margin-top:28px}
+.room p{flex:1;min-width:240px;color:var(--ink2)}
+footer{padding:30px 0 40px;color:var(--ink2);font-size:13.5px;border-top:1px solid var(--line)}
+@media (max-width:860px){.grid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}.nav-card{grid-template-columns:1fr}}
+@media (max-width:600px){.wrap{padding:0 16px}nav .links{display:none}.grid,.areas,.contact{grid-template-columns:1fr}header.hero{padding:44px 0 36px}.tl .it{grid-template-columns:1fr;gap:4px}section{padding:44px 0}}
+</style>
+</head>
+<body>
+<nav><div class="wrap"><a class="brand" href="#">Julio Bascuñán</a>
+<div class="links"><a href="#que-hago">Qué hago</a><a href="#proyectos">Proyectos</a><a href="#trayectoria">Trayectoria</a><a href="#contacto">Contacto</a></div>
+<a class="btn sm" href="../#sala" title="Ver la versión gamificada">🎮 Versión gamificada</a></div></nav>
+
+<header class="hero"><div class="wrap">
+<div class="eyebrow">Desarrollador de software · Arica, Chile</div>
+<h1>Digitalizo empresas y hago que <em>aprender sea un juego</em>.</h1>
+<p class="lead">Construyo sistemas a medida que pasan procesos de papel y planillas a apps simples, conectadas y con datos en tiempo real. También creo plataformas de aprendizaje gamificado para formar personas de forma práctica y entretenida.</p>
+<div class="cta"><a class="btn pri" href="#proyectos">Ver proyectos con demo</a><a class="btn" href="https://www.navigram.cl" target="_blank" rel="noopener">Navigram ↗</a><a class="btn" href="#contacto">Contacto</a></div>
+<div class="stats">
+<div class="stat"><b id="sTotal">80+</b><span>proyectos desde 2015</span></div>
+<div class="stat"><b>20+</b><span>apps en uso diario en planta</span></div>
+<div class="stat"><b id="sRoblox">11</b><span>juegos publicados en Roblox</span></div>
+<div class="stat"><b id="sLive">5</b><span>plataformas en línea para probar</span></div>
+</div></div></header>
+
+<section id="que-hago"><div class="wrap">
+<h2>Qué hago</h2>
+<p class="sub">Dos líneas de trabajo que se cruzan: tecnología para que las empresas operen mejor, y juegos para que las personas aprendan mejor.</p>
+<div class="areas">
+<div class="area"><div class="ic">🏭</div><h3>Digitalización de empresas</h3><p>Apps de planta hechas a medida, que la gente usa todos los días.</p>
+<ul><li>Producción por hora, metas, scrap y dashboards</li><li>Checklists 5S, reportes de mecánicos y capacitaciones con fotos y firmas</li><li>Pantallas en tiempo real y reportes en Power BI</li></ul></div>
+<div class="area"><div class="ic">🎓</div><h3>Gamificación del aprendizaje</h3><p>Plataformas donde se aprende jugando, con niveles, retos y progreso.</p>
+<ul><li>RoboPy: aprender Python programando un robot (49 niveles)</li><li>Pixelito: niños crean sus propios juegos con la voz</li><li>Capacitación técnica con laboratorio 3D y evaluación por roles</li></ul></div>
+<div class="area"><div class="ic">🔌</div><h3>Integración IT / OT e IoT</h3><p>Conecto la operación real con los sistemas de la empresa.</p>
+<ul><li>Sensores ESP32 por WiFi conectados a dashboards</li><li>Bases de datos SQL Server y APIs internas</li></ul></div>
+<div class="area"><div class="ic">🧠</div><h3>IA aplicada</h3><p>IA donde ahorra tiempo de verdad.</p>
+<ul><li>Consultas a la base de datos en lenguaje natural, con IA local</li><li>De audio y fotos a un informe listo, con llenado automático de portales</li><li>Visión por computador</li></ul></div>
+</div>
+<div class="nav-card">
+<div><div class="eyebrow" style="color:#ffb08a">Mi empresa</div><h2 style="color:#fff;margin:6px 0 10px">Navigram · ingeniería digital</h2>
+<p>Con Navigram conectamos software, diseño y operación para que lo complejo trabaje a favor del negocio. Trabajamos desde Santiago con proyectos remotos.</p>
+<a class="btn" href="https://www.navigram.cl" target="_blank" rel="noopener">Visitar navigram.cl ↗</a></div>
+<div class="svc"><span>Software a medida</span><span>Cloud y DevOps</span><span>Integración IT / OT</span><span>Diseño de producto</span><span>Digitalización</span><span>MVP y nuevos productos</span></div>
+</div></div></section>
+
+<section id="proyectos"><div class="wrap">
+<h2>Proyectos destacados</h2>
+<p class="sub">Los que tienen botón verde se pueden probar ahora mismo. Los sistemas de empresa son de uso interno, por eso no tienen enlace público.</p>
+<div class="tabs" id="tabs"></div>
+<div class="grid" id="grid"></div>
+</div></section>
+
+<section id="trayectoria"><div class="wrap">
+<h2>Trayectoria</h2>
+<p class="sub">De mis primeros juegos en 2015 a sistemas completos para la industria.</p>
+<div class="tl" id="tl"></div>
+<h3 style="margin-top:34px;font-size:19px">Tecnologías</h3>
+<div class="tech" id="tech"></div>
+</div></section>
+
+<section id="contacto"><div class="wrap">
+<h2>Conversemos</h2>
+<p class="sub">¿Tienes un proceso que digitalizar o una capacitación que quieras convertir en juego? Escríbeme.</p>
+<div class="contact">
+<a class="box" href="mailto:contacto@navigram.cl"><small>Correo</small><b>contacto@navigram.cl</b></a>
+<a class="box" href="https://www.navigram.cl" target="_blank" rel="noopener"><small>Empresa</small><b>navigram.cl ↗</b></a>
+<a class="box" href="https://github.com/juliobascu" target="_blank" rel="noopener"><small>GitHub</small><b>github.com/juliobascu ↗</b></a>
+<a class="box" href="../#sala"><small>Versión gamificada</small><b>🎮 Mi habitación 3D de los 90</b></a>
+</div>
+<div class="room"><div style="font-size:34px">🕹️</div><p>Este portafolio también tiene una versión gamificada: una habitación de los 90 en 3D con un PC estilo Windows 95, mis consolas, mis instrumentos y todos mis proyectos.</p><a class="btn pri" href="../#sala">Entrar a la habitación</a></div>
+</div></section>
+
+<footer><div class="wrap">© <span id="yr">2026</span> Julio Bascuñán · Arica, Chile</div></footer>
+
+<script>
+const CAT = {
+  juego:{n:"Juegos",em:"🎮",c:["#7b3fe4","#e2572b"]},
+  web:{n:"Web y apps",em:"🌐",c:["#1f7a8c","#2bb3a3"]},
+  industria:{n:"Industria",em:"🏭",c:["#3b4a6b","#5b7bb2"]},
+  ia:{n:"IA",em:"🧠",c:["#b03a6f","#f08a5d"]},
+  edu:{n:"Educación",em:"🎓",c:["#2f8f4e","#9bc53d"]},
+  uni:{n:"Universidad",em:"📚",c:["#6b4f2a","#c49a4c"]},
+};
+const ERAS = [
+  {id:"2015", yr:"2015–2019", t:"Los inicios", d:"Primeros programas y juegos con motores visuales. Aprender haciendo."},
+  {id:"2022", yr:"2022–2023", t:"INACAP y primeros sistemas", d:"Paso de los juegos a las bases de datos y los primeros sistemas para empresas."},
+  {id:"2024", yr:"2024", t:"Industria y universidad", d:"Apps de planta en Django y Flask, ramos de la universidad y muchas pruebas."},
+  {id:"2025", yr:"2025", t:"Sistemas completos", d:"Tesis Atenas 2.0, IA local, IoT y más de 20 apps en uso en planta."},
+  {id:"2026", yr:"2026", t:"Proyectos grandes", d:"Plataformas educativas en línea, juegos multijugador y Roblox publicado."},
+];
+// id, era, nombre, descripción, categoría, tecnologías, extras {star, live, priv, play, demo2:[texto,url], shots:N (capturas/<id>-2.png ... -N.png), vid:1 (capturas/<id>.mp4)}
+const P = [
+ ["contador","2015","Contador 0 a 9999","Mi primer programa: un contador.","web",["Programación básica"]],
+ ["rtype","2015","R-Type","Shooter espacial de naves con sprites propios.","juego",["Construct 2"]],
+ ["android-ar","2015","Pruebas de realidad aumentada","AR Meta, AR Plane y evaluación AR en Android.","juego",["Unity","Android","AR"]],
+ ["rpg-maker","2015","Dungeon RPG","Mazmorra con combate por turnos.","juego",["RPG Maker MV"]],
+
+ ["produccion-hora","2022","Producción por hora","Primer sistema de producción por hora: el origen de Atenas.","industria",["Flask","SQL Server"],{priv:1}],
+ ["lightship","2022","Lightship AR","Prueba de realidad aumentada con Niantic Lightship.","juego",["Unity","AR"]],
+ ["phishing","2022","Laboratorio de phishing","Demostración educativa de phishing para un ramo de seguridad.","uni",["Flask","Seguridad"]],
+ ["contenedores","2022","Gestión de contenedores","Control de contenedores y clientes, en varias versiones.","industria",["Django"],{priv:1}],
+ ["chatdatabase","2022","CanBot","Chatbot que responde preguntas consultando la base de datos de la empresa.","ia",["Python","Chatbot"]],
+
+ ["ratitas","2022","Ratitas xD","Mi primer juego en Roblox (2023).","juego",["Roblox","Luau"],{nojugable:1}],
+
+ ["tablero-rol","2024","Tablero de Rol virtual","Tablero para jugar rol en línea; pasó de Docker a versión web.","juego",["Node.js","Docker"]],
+ ["cdr","2024","CDR","Proyecto de integración en equipo, con manuales.","uni",["Web","Trabajo en equipo"]],
+ ["numerica","2024","Métodos numéricos","Calculadoras de métodos numéricos con app de presentación.","uni",["Python","Web"]],
+ ["inacaptemplate","2024","INACAP Template","Plantilla web reutilizable.","web",["HTML","CSS"]],
+ ["rpg-clicker","2024","RPG Clicker","Juego clicker con progreso de RPG.","juego",["Django"]],
+ ["clickers","2024","Clickers JS","Varios juegos clicker para practicar.","juego",["JavaScript"]],
+ ["3d-react","2024","Escena 3D","Escena 3D interactiva en el navegador.","web",["React Three Fiber"]],
+ ["facewindow","2024","FaceWindow","Detección de rostros en tiempo real.","ia",["OpenCV","MediaPipe"]],
+ ["tablon","2024","Tablón de anuncios","Avisos internos para la planta.","industria",["Django"]],
+ ["todo","2024","Lista de tareas","Gestor de tareas para el equipo.","industria",["Django"]],
+ ["django-equipos","2024","Mapa de equipos","Mapa automático de equipos de la planta.","industria",["Django","Leaflet"]],
+ ["qr","2024","Generador de QR","Genera códigos QR para equipos y documentos.","web",["Django"]],
+ ["cristalpdf","2024","CristalPDF","Une varios PDF en uno.","web",["Flask"]],
+ ["unity-pruebas","2024","Pruebas en Unity","ML-Agents, construcción, ciudad, árbol RPG y VR.","juego",["Unity","VR","ML-Agents"]],
+
+ ["atenas-2","2025","Atenas 2.0 (tesis)","Producción por hora, metas, scrap, dashboard, consultas en lenguaje natural con IA, sensores ESP32 y AR.","industria",["Flask","SQL Server","IA","ESP32"],{star:1}],
+ ["5s","2025","App 5S","Checklist y evaluación 5S con fotos, firmas, correo y dashboard en Power BI.","industria",["Flask","SQL Server","Power BI"],{star:1,priv:1}],
+ ["ergon","2025","ERGON Plataforma CES","Plataforma de capacitaciones empresariales.","edu",["Web"]],
+ ["historico","2025","Histórico de producción","Dashboard histórico con filtros.","industria",["Python","SQL Server"],{priv:1}],
+ ["orion-ai","2025","ORION AI","Asistente que escribe SQL con IA local (Llama 3).","ia",["Llama 3","Python","SQL"]],
+ ["pantallas","2025","Pantallas de planta","Pantallas informativas en tiempo real.","industria",["Django"]],
+ ["sensor-agua","2025","Sensor de agua WiFi","ESP32 que mide el nivel de un tambor y lo muestra en un dashboard.","industria",["ESP32","IoT"]],
+ ["sala-agua","2025","Sala de agua","Registro diario en 10 pestañas.","industria",["Flask"]],
+ ["mecanicos","2025","Reportes de mecánicos","Reportes con fotos desde el celular.","industria",["Flask"]],
+ ["lups","2025","LUPs digital","Registro de capacitaciones y actas.","industria",["Flask"]],
+ ["compras","2025","Análisis de compras","Analizador de salidas de inventario.","industria",["Python","Pandas"]],
+ ["monitor","2025","Monitor de carpetas","Avisa por correo cuando llegan archivos.","industria",["Python","watchdog"]],
+ ["bfs-dfs","2025","BFS y DFS","Visualizador de algoritmos de búsqueda.","uni",["JavaScript","Algoritmos"]],
+ ["gacha","2025","RNG Gacha","Juego de gachapon con colección.","juego",["JavaScript"]],
+ ["guerra-tiempo","2025","Guerra de Tiempo","Estrategia de aldeas estilo navegador.","juego",["Web"]],
+ ["sky","2025","Sky 3D Chat","Chat 3D en tiempo real.","web",["Three.js","WebSockets"]],
+ ["cockpit","2025","Cockpit SC","Panel táctil para simuladores espaciales.","web",["Web"]],
+ ["lifegamer","2025","LifeGamer","Gamifica tu vida: metas como juego, con asistente Gemini.","ia",["Gemini","Web"]],
+ ["kta","2025","KTA (Kill Them All)","Juego de combate publicado en Roblox.","juego",["Roblox","Luau"],{play:"https://www.roblox.com/games/78904963344720"}],
+ ["infinite-clicker","2025","Infinite Clicker","Juego clicker publicado en Roblox.","juego",["Roblox","Luau"],{play:"https://www.roblox.com/games/91432292403508"}],
+ ["ratas-como-tu","2025","Ratas Como Tú","Escapa por las alcantarillas siendo una rata.","juego",["Roblox","Luau"],{play:"https://www.roblox.com/games/100364461290036"}],
+ ["rojo-es-malo","2025","Rojo es Malo (ReM)","Juego publicado en Roblox.","juego",["Roblox","Luau"],{play:"https://www.roblox.com/games/87932339413978"}],
+ ["ultimate-stat","2025","Ultimate Stat Simulator","Simulador: +1 a tus estadísticas cada segundo.","juego",["Roblox","Luau"],{play:"https://www.roblox.com/games/135170421937613"}],
+ ["julioflix","2025","Julioflix","Catálogo de películas estilo streaming.","web",["Web"]],
+
+ ["pixelito","2026","Pixelito","Creador de juegos para niños con voz, tutoriales y cuaderno.","edu",["React","Supabase","Voz"],{star:1,live:"https://pixelito.vercel.app",demo2:["🎨 Taller de juegos","https://taller-de-juegos.vercel.app"]}],
+ ["robopy","2026","RoboPy","Aprende Python programando un robot, en 49 niveles.","edu",["Python","Web"],{star:1,live:"https://robopy.vercel.app"}],
+ ["veil-hunters","2026","Veil Hunters RPG","RPG de acción publicado en Roblox.","juego",["Roblox","Luau"],{star:1,play:"https://www.roblox.com/games/118352655800846"}],
+ ["atenas-hexagon","2026","Atenas Hexagon","Capacitación técnica: laboratorio 3D de cableado, evaluación por roles, PWA.","edu",["React","3D","PWA"],{star:1,priv:1}],
+ ["hacienda-pixel","2026","Hacienda Pixel","Juego incremental de hacienda multijugador.","juego",["Node.js","PostgreSQL"],{star:1}],
+ ["viento-bound","2026","Viento Bound","Artillería por turnos multijugador para celular.","juego",["Node.js","WebSockets"],{star:1}],
+ ["chauchera","2026","Chauchera","App de micropagos.","web",["Next.js","Supabase"]],
+ ["sap-academy","2026","SAP Academy","Curso de SAP en la web.","edu",["Next.js","Supabase"],{live:"https://sap-academy-gray.vercel.app"}],
+ ["arce-online","2026","Arce Online","RPG de plataformas multijugador para celular.","juego",["Node.js","WebSockets"]],
+ ["mina","2026","Mina Incremental","Juego idle de minería con guardado en la nube.","juego",["React","TypeScript","Supabase"]],
+ ["autochecklist","2026","AutoChecklist","Audio y fotos → informe con Gemini → un robot llena el portal.","ia",["Gemini","Playwright"]],
+ ["tds","2026","TDS Training Simulator","Simulador de auditoría de sistemas por vehículo.","edu",["Web"],{priv:1}],
+ ["coloblox","2026","Coloblox","Juego de colores y plataformas en un desierto.","juego",["Roblox","Luau"],{play:"https://www.roblox.com/games/82009112210424"}],
+ ["torre-rpg-hunter","2026","Torre RPG Hunter","Sube la torre piso por piso venciendo enemigos.","juego",["Roblox","Luau"],{play:"https://www.roblox.com/games/134804597260803"}],
+ ["magia","2026","MAGIA","Juego de magia publicado en Roblox.","juego",["Roblox","Luau"],{star:1,play:"https://www.roblox.com/games/137620316337718"}],
+ ["pmu","2026","Pocket Mu","RPG de fantasía en el cielo, inspirado en los MMO clásicos.","juego",["Roblox","Luau"],{play:"https://www.roblox.com/games/92613068508803"}],
+ ["egg-drop","2026","Egg Drop","Simulador en Roblox (en pruebas).","juego",["Roblox","Luau"],{privado:1}],
+ ["movimiento-rivals","2026","Movimiento Rivals","Carrera, deslizamiento, saltos y dash como en los shooters rápidos.","juego",["Roblox","Luau"],{privado:1}],
+ ["valle-arcano","2026","Valle Arcano Survival","Sobrevive en un valle mágico: recolecta, construye y resiste.","juego",["Roblox","Luau"],{privado:1}],
+ ["elemental","2026","Elemental","Domina los elementos y combate con poderes.","juego",["Roblox","Luau"],{privado:1}],
+ ["seth-tycoon","2026","Seth Tycoon War","Tycoon de guerra: construye tu base y ataca a los demás.","juego",["Roblox","Luau"],{privado:1}],
+ ["mapas","2026","Mapas","Diseño de mapas y terrenos para mis juegos.","juego",["Roblox","Luau"],{privado:1}],
+ ["enemigos-ai","2026","Enemigos con IA","Enemigos que patrullan, persiguen y atacan solos.","juego",["Roblox","Luau"],{privado:1}],
+ ["vfx","2026","VFX","Efectos visuales: explosiones, auras y partículas.","juego",["Roblox","Luau"],{privado:1}],
+ ["vfx-animaciones","2026","VFX y animaciones","Animaciones de ataques con sus efectos.","juego",["Roblox","Luau"],{privado:1}],
+ ["roblox-assets","2026","Assets y modelos","Monedas, HUD y carteles listos para reutilizar.","juego",["Roblox","Luau"],{privado:1}],
+ ["disparos-jb","2026","Disparos JB","Sistema de armas y disparos en tercera persona.","juego",["Roblox","Luau"],{privado:1}],
+ ["prueba-laser","2026","Prueba Láser","Sistema de disparos láser con rebotes.","juego",["Roblox","Luau"],{privado:1}],
+ ["clicker-reset","2026","Clicker RESET Infinity","Clicker con reinicios infinitos para multiplicar todo.","juego",["Roblox","Luau"],{privado:1}],
+ ["prueba-rojo","2026","Prueba Rojo","Prueba de terreno y cuevas para «Rojo es Malo».","juego",["Roblox","Luau"],{privado:1}],
+ ["testai","2026","TEST AI","Pruebas de inteligencia artificial dentro de Roblox.","juego",["Roblox","Luau"],{privado:1}],
+ ["juego-sin-nombre","2026","Juego sin nombre","Un hobby: puentes y plataformas para cruzar.","juego",["Roblox","Luau"],{privado:1}],
+ ["inspiration","2026","Inspiration","Generador de progresiones de acordes para componer.","web",["Python","SCAMP"]],
+ ["extensiones","2026","Extensiones de Chrome","Limpiador de anuncios y extractor de modelos 3D.","web",["JavaScript","Chrome"]],
+ ["clickbot","2026","ClickBot","Tester de bots para Roblox con visión por computador.","ia",["OpenCV","Python"]],
+ ["atenas-ar","2026","Atenas AR","Realidad aumentada para la planta.","industria",["Unity","AR"]],
+].map(([id,era,name,desc,cat,tech,x={}])=>({id,era,name,desc,cat,tech,...x}));
+
+
+/* colores neón por categoría */
+Object.assign(CAT.juego,{c:["#7c4dff","#ff2bd6"]});
+Object.assign(CAT.web,{c:["#0091ea","#00e5ff"]});
+Object.assign(CAT.industria,{c:["#1a237e","#536dfe"]});
+Object.assign(CAT.ia,{c:["#c51162","#ff6e40"]});
+Object.assign(CAT.edu,{c:["#00bfa5","#76ff03"]});
+Object.assign(CAT.uni,{c:["#ff6d00","#ffd740"]});
+
+
+
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const by=Object.fromEntries(P.map(p=>[p.id,p]));
+const GROUPS=[
+ {n:"Con demo",ids:P.filter(p=>typeof p.live==="string").map(p=>p.id).concat(["veil-hunters","magia"])},
+ {n:"Digitalización",ids:["atenas-2","5s","produccion-hora","historico","pantallas","mecanicos","lups","django-equipos","sensor-agua"]},
+ {n:"Aprendizaje gamificado",ids:["robopy","pixelito","sap-academy","atenas-hexagon","tds","ergon"]},
+ {n:"IA",ids:["orion-ai","autochecklist","chatdatabase","facewindow","clickbot","lifegamer"]},
+ {n:"Juegos",ids:["veil-hunters","magia","pmu","kta","hacienda-pixel","viento-bound","torre-rpg-hunter","ratas-como-tu"]},
+];
+const grad=p=>{const c=(CAT[p.cat]||CAT.web).c;return `linear-gradient(135deg,${c[0]},${c[1]})`};
+function card(p){
+  let a="";
+  if(typeof p.live==="string") a+=`<a class="btn sm play" href="${p.live}" target="_blank" rel="noopener">▶ Probar demo</a>`;
+  if(p.demo2) a+=`<a class="btn sm" href="${p.demo2[1]}" target="_blank" rel="noopener">${esc(p.demo2[0])} ↗</a>`;
+  if(p.play) a+=`<a class="btn sm play" href="${p.play}" target="_blank" rel="noopener">▶ Jugar en Roblox</a>`;
+  if(p.vid) a+=`<a class="btn sm" href="../capturas/${p.id}.mp4" target="_blank" rel="noopener">🎬 Ver video</a>`;
+  if(!a) a=`<span class="priv">${p.priv?"🔒 Uso interno: sin enlace público":"📷 Sin versión en línea"}</span>`;
+  const badge=p.live||p.play?`<span class="badge">En línea</span>`:p.priv?`<span class="badge">Uso interno</span>`:"";
+  return `<article class="pc"><div class="im"><img src="../capturas/${p.id}.png" alt="${esc(p.name)}" loading="lazy" onerror="if(!this.dataset.j){this.dataset.j=1;this.src='../capturas/${p.id}.jpg'}else{this.style.display='none';this.nextElementSibling.style.display='flex'}"><div class="ph" style="background:${grad(p)}">${(CAT[p.cat]||{}).em||"💾"}</div>${badge}</div>
+  <div class="bd"><h3>${esc(p.name)}</h3><div class="yr">${(ERAS.find(e=>e.id===p.era)||{}).yr||p.era} · ${esc((CAT[p.cat]||{}).n||"")}</div><p>${esc(p.desc)}</p><div class="chips">${p.tech.map(t=>`<span class="chip">${esc(t)}</span>`).join("")}</div><div class="acts">${a}</div></div></article>`;
+}
+let cur=0;
+function render(){ document.getElementById("tabs").innerHTML=GROUPS.map((g,i)=>`<button class="tab ${i===cur?"on":""}" data-i="${i}">${g.n}</button>`).join("");
+  document.getElementById("grid").innerHTML=[...new Set(GROUPS[cur].ids)].map(id=>by[id]).filter(Boolean).map(card).join("");
+  document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{cur=+b.dataset.i;render();}); }
+render();
+document.getElementById("tl").innerHTML=ERAS.slice().reverse().map(e=>`<div class="it"><b>${e.yr}</b><div><h3>${esc(e.t)}</h3><p>${esc(e.d)}</p></div></div>`).join("");
+const cnt={}; P.forEach(p=>p.tech.forEach(t=>cnt[t]=(cnt[t]||0)+1));
+const skip=new Set(["Web","Programación básica","Trabajo en equipo","Voz","3D"]);
+document.getElementById("tech").innerHTML=Object.entries(cnt).filter(([t])=>!skip.has(t)).sort((a,b)=>b[1]-a[1]).slice(0,24).map(([t])=>`<span>${esc(t)}</span>`).join("");
+document.getElementById("sTotal").textContent=P.length;
+document.getElementById("sRoblox").textContent=P.filter(p=>p.play).length;
+document.getElementById("sLive").textContent=P.filter(p=>typeof p.live==="string").length+(P.some(p=>p.demo2)?1:0);
+document.getElementById("yr").textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
