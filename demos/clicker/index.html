@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Producción</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="text-center mb-4">
+            <h1>Simulador de Producción</h1>
+            <h2>Información General</h2>
+            <p>EMPLEADOS: <span id="empleados">1</span></p>
+            <p>LÍNEAS PRODUCCIÓN: <span id="lineas">0</span></p>
+            <p>ENVASES: <span id="envases">0</span></p>
+            <p>DINERO: $<span id="dinero">0</span></p>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <div class="card text-white bg-primary mb-3 mr-3" style="max-width: 18rem;">
+                <div class="card-header">Acciones</div>
+                <div class="card-body">
+                    <button onclick="producirEnvase()" class="btn btn-light mb-2">Producir Envase</button>
+                    <button onclick="venderEnvases()" class="btn btn-light mb-2">Vender Envases</button>
+                </div>
+            </div>
+
+            <div class="card text-white bg-success mb-3 mr-3" style="max-width: 18rem;">
+                <div class="card-header">Empleados</div>
+                <div class="card-body">
+                    <button onclick="comprarEmpleado()" class="btn btn-light mb-2">+1 Empleado ($10)</button>
+                    <button onclick="comprarMaxEmpleados()" class="btn btn-light mb-2">Comprar Máximo de Empleados</button>
+                </div>
+            </div>
+
+            <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                <div class="card-header">Líneas de Producción</div>
+                <div class="card-body">
+                    <button onclick="comprarLinea()" class="btn btn-light mb-2">+1 Línea de Producción ($1000)</button>
+                    <button onclick="comprarMaxLineas()" class="btn btn-light mb-2">Comprar Máximo de Líneas</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let empleados = 1;
+        let lineas = 0;
+        let envases = 0;
+        let dinero = 0;
+
+        function producirEnvase() {
+            envases += empleados;
+            document.getElementById('envases').textContent = envases;
+        }
+
+        function producirEnvaseLinea() {
+            envases += lineas * 10;
+            document.getElementById('envases').textContent = envases;
+        }
+
+        function venderEnvases() {
+            dinero += envases;
+            envases = 0;
+            document.getElementById('envases').textContent = envases;
+            document.getElementById('dinero').textContent = dinero;
+        }
+
+        function comprarEmpleado() {
+            if (dinero >= 10) {
+                empleados++;
+                dinero -= 10;
+                document.getElementById('empleados').textContent = empleados;
+                document.getElementById('dinero').textContent = dinero;
+            } else {
+                alert('No tienes suficiente dinero para comprar un empleado.');
+            }
+        }
+
+        function comprarMaxEmpleados() {
+            let maxEmpleados = Math.floor(dinero / 10);
+            empleados += maxEmpleados;
+            dinero -= maxEmpleados * 10;
+            document.getElementById('empleados').textContent = empleados;
+            document.getElementById('dinero').textContent = dinero;
+        }
+
+        function comprarLinea() {
+            if (dinero >= 1000) {
+                lineas++;
+                dinero -= 1000;
+                document.getElementById('lineas').textContent = lineas;
+                document.getElementById('dinero').textContent = dinero;
+            } else {
+                alert('No tienes suficiente dinero para comprar una línea de producción.');
+            }
+        }
+
+        function comprarMaxLineas() {
+            let maxLineas = Math.floor(dinero / 1000);
+            lineas += maxLineas;
+            dinero -= maxLineas * 1000;
+            document.getElementById('lineas').textContent = lineas;
+            document.getElementById('dinero').textContent = dinero;
+        }
+
+        setInterval(() => {
+            if (lineas > 0) {
+                producirEnvaseLinea();
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
