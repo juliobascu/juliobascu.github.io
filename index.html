@@ -154,7 +154,47 @@ canvas#room{position:fixed;inset:0;width:100%;height:100%;display:block;touch-ac
 .scan{position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(0deg,rgba(0,0,0,.06) 0 1px,transparent 1px 3px);display:none}
 #desk.on~.scan{display:block}
 
+/* ---------- consola de juegos ---------- */
+#arcade{position:fixed;inset:0;z-index:26;display:none;flex-direction:column;background:#0b0820;color:#fff;font-family:"Press Start 2P",monospace;overflow:hidden}
+#arcade.on{display:flex;animation:crton .45s ease-out}
+#arcade:before{content:"";position:absolute;left:-50%;right:-50%;bottom:0;height:45%;background:linear-gradient(transparent 0 0),repeating-linear-gradient(90deg,rgba(255,43,214,.35) 0 2px,transparent 2px 60px),repeating-linear-gradient(0deg,rgba(255,43,214,.35) 0 2px,transparent 2px 40px);transform:perspective(300px) rotateX(60deg);transform-origin:bottom;opacity:.5;pointer-events:none}
+#arcade:after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px),radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.6))}
+.ar-top{position:relative;z-index:2;display:flex;align-items:center;gap:14px;padding:16px 20px 10px;flex-wrap:wrap}
+.ar-top h2{flex:1;text-align:center;font-size:clamp(14px,2.6vw,24px);color:#ffd447;text-shadow:3px 3px 0 #d7402a,0 0 18px rgba(255,212,71,.4);min-width:200px}
+.ar-btn{font-family:inherit;font-size:10px;background:#1b1446;color:#7ff9ff;border:2px solid #7ff9ff;padding:10px 12px;cursor:pointer;box-shadow:3px 3px 0 #000}
+.ar-btn:hover,.ar-btn:focus-visible{background:#7ff9ff;color:#0b0820;outline:none}
+.ar-tabs{position:relative;z-index:2;display:flex;justify-content:center;gap:8px;padding:6px 12px 14px;flex-wrap:wrap}
+.ar-tabs button{font-family:inherit;font-size:10px;padding:10px 12px;background:transparent;color:#b9a6ff;border:2px solid #4a3a8a;cursor:pointer}
+.ar-tabs button.on{background:#ff2bd6;color:#fff;border-color:#fff;box-shadow:0 0 16px rgba(255,43,214,.6)}
+.ar-grid{position:relative;z-index:2;flex:1;overflow:auto;padding:6px 20px 30px;display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:18px;align-content:start}
+.cartg{background:#1b1446;border:3px solid #4a3a8a;padding:8px 8px 10px;cursor:pointer;position:relative;transition:transform .12s,border-color .12s,box-shadow .12s;box-shadow:5px 5px 0 #000}
+.cartg:hover,.cartg.sel{transform:translateY(-4px) scale(1.03);border-color:#ffd447;box-shadow:5px 9px 0 #000,0 0 24px rgba(255,212,71,.35)}
+.cartg .cv{aspect-ratio:16/10;background:#000;position:relative;overflow:hidden;image-rendering:pixelated}
+.cartg .cv img{width:100%;height:100%;object-fit:cover;display:block}
+.cartg b{display:block;font-size:10px;line-height:1.5;margin-top:9px;color:#fff}
+.cartg small{font-size:8px;color:#9d8fe0}
+.cartg .bd{position:absolute;top:14px;right:14px;font-size:8px;padding:4px 5px;background:#2ecc71;color:#000;border:2px solid #000}
+.cartg .bd.p{background:#ffd447}.cartg .bd.n{background:#ff6b6b}
+.ar-foot{position:relative;z-index:2;text-align:center;font-size:8px;color:#8a7cc8;padding:10px 10px calc(12px + env(safe-area-inset-bottom))}
+#arDet{position:absolute;inset:0;z-index:5;background:rgba(11,8,32,.92);display:none;align-items:center;justify-content:center;padding:20px}
+#arDet.on{display:flex}
+#arDet .box{max-width:860px;width:100%;display:grid;grid-template-columns:1.3fr 1fr;gap:22px;background:#1b1446;border:3px solid #ffd447;padding:18px;box-shadow:8px 8px 0 #000;max-height:100%;overflow:auto}
+#arDet .cv{aspect-ratio:16/10;background:#000;overflow:hidden;position:relative}
+#arDet .cv img{width:100%;height:100%;object-fit:cover;display:block}
+#arDet h3{font-size:16px;line-height:1.5;color:#ffd447;margin-bottom:10px}
+#arDet p{font-family:VT323,monospace;font-size:22px;line-height:1.15;color:#e8e0ff}
+#arDet .tg{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+#arDet .tg span{font-size:8px;padding:5px 6px;border:2px solid #7ff9ff;color:#7ff9ff}
+#arDet .go{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.ar-play{font-family:inherit;font-size:12px;background:#2ecc71;color:#000;border:3px solid #000;padding:14px 16px;text-decoration:none;box-shadow:4px 4px 0 #000;display:inline-block;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{background:#7dffb0}}
+.ar-st{font-family:VT323,monospace;font-size:20px;color:#ffd447;margin-top:8px}
+
 @media (max-width:700px){
+  .ar-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:6px 12px 24px}
+  .cartg b{font-size:8px}
+  #arDet .box{grid-template-columns:1fr;gap:12px}
+  .ar-top{padding:12px}
   #icons{flex-direction:row;flex-wrap:wrap;align-content:flex-start;right:6px;justify-content:space-around}
   .ico{width:76px}
   .win{left:0!important;top:0!important;width:100vw!important;height:calc(100% - 34px - env(safe-area-inset-bottom))!important}
@@ -178,7 +218,7 @@ canvas#room{position:fixed;inset:0;width:100%;height:100%;display:block;touch-ac
 <script>if(matchMedia("(pointer:coarse)").matches)document.getElementById("hint").textContent="👆 Toca el PC o los objetos · desliza para mirar";</script>
 <div id="hud">
   <div class="who"><b class="px">JULIO BASCUÑÁN</b><span class="vt">Desarrollador · Arica, Chile · nacido en 1985</span></div>
-  <div class="acts"><button class="rbtn alt" id="bMusic">♪ MÚSICA</button><button class="rbtn" id="bEnter">ENCENDER PC ▶</button></div>
+  <div class="acts"><button class="rbtn alt" id="bMusic">♪ MÚSICA</button><button class="rbtn alt" id="bGames">🎮 JUEGOS</button><button class="rbtn" id="bEnter">ENCENDER PC ▶</button></div>
 </div>
 <div id="tip" class="px"></div>
 <div id="toast" class="vt"></div>
@@ -200,6 +240,13 @@ canvas#room{position:fixed;inset:0;width:100%;height:100%;display:block;touch-ac
     <div id="tbtns"></div>
     <div id="tray"><button id="snd" title="Sonido">🔊</button><span id="clock">00:00</span></div>
   </div>
+</div>
+<div id="arcade" role="dialog" aria-label="Consola de juegos">
+  <div class="ar-top"><button class="ar-btn" id="arExit">◀ SALIR</button><h2>JULIO GAMES</h2><button class="ar-btn" id="arMute">♪</button></div>
+  <div class="ar-tabs" id="arTabs"></div>
+  <div class="ar-grid" id="arGrid"></div>
+  <div class="ar-foot">← → ↑ ↓ MOVER · ENTER ELEGIR · ESC SALIR</div>
+  <div id="arDet"></div>
 </div>
 <div class="scan"></div>
 
@@ -598,6 +645,56 @@ $("#bEnter").onclick=()=>enterPC();
 $("#bMusic").onclick=()=>{ ac(); const on=musicToggle(); toast(on?"♪ Sonando: «Arica 1985» (chiptune original)":"Música en pausa"); };
 addEventListener("keydown",e=>{ if(e.key==="Escape"&&pcState==="pc"){ const top=Object.entries(wins).sort((a,b)=>b[1].el.style.zIndex-a[1].el.style.zIndex)[0]; if(top)closeWin(top[0]); } if(e.key==="Enter"&&pcState==="room"&&document.activeElement===document.body)enterPC(); });
 
+/* ================== Consola de juegos ================== */
+const AR_TABS=[
+  {id:"roblox",n:"ROBLOX",items:FOLDERS.find(f=>f.id==="roblox").items.slice().sort((a,b)=>(b.play?1:0)-(a.play?1:0)||(b.star?1:0)-(a.star?1:0))},
+  {id:"otros",n:"OTROS JUEGOS",items:FOLDERS.find(f=>f.id==="juegos").items.slice().reverse()},
+  {id:"pruebas",n:"EN DESARROLLO",items:FOLDERS.find(f=>f.id==="pruebas").items.filter(p=>p.cat==="juego")},
+];
+window.ARCADE_LIST=AR_TABS[0].items.filter(p=>p.play);
+let arTab=0, arSel=0;
+function arRender(){
+  $("#arTabs").innerHTML=AR_TABS.map((t,i)=>`<button class="${i===arTab?"on":""}" data-t="${i}">${t.n} (${t.items.length})</button>`).join("");
+  $("#arTabs").querySelectorAll("button").forEach(b=>b.onclick=()=>{arTab=+b.dataset.t;arSel=0;tone(660,.05,"square",.03);arRender()});
+  const items=AR_TABS[arTab].items;
+  $("#arGrid").innerHTML=items.map((p,i)=>{ const bd=p.play?`<span class="bd">▶ JUGAR</span>`:p.privado?`<span class="bd p">PRONTO</span>`:p.nojugable?`<span class="bd n">RETIRADO</span>`:""; return `<div class="cartg ${i===arSel?"sel":""}" data-i="${i}"><div class="cv">${thumb(p)}</div>${bd}<b>${esc(p.name)}</b><small>${eraName(p.era)} · ${esc(p.tech.slice(0,2).join(" · "))}</small></div>`}).join("");
+  $("#arGrid").querySelectorAll(".cartg").forEach(c=>{ c.onclick=()=>{arSel=+c.dataset.i;arOpen()}; c.onmouseenter=()=>{ if(arSel!==+c.dataset.i){arSel=+c.dataset.i;$("#arGrid").querySelectorAll(".sel").forEach(x=>x.classList.remove("sel"));c.classList.add("sel");tone(880,.025,"square",.02)} }; });
+}
+function arOpen(){
+  const p=AR_TABS[arTab].items[arSel]; if(!p)return; sfx.coin();
+  const st=p.play?`<a class="ar-play" href="${p.play}" target="_blank" rel="noopener">▶ JUGAR EN ROBLOX</a>`: typeof p.live==="string"?`<a class="ar-play" href="${p.live}" target="_blank" rel="noopener">▶ JUGAR EN LÍNEA</a>`:"";
+  const note=p.privado?"Todavía en desarrollo: es privado por ahora.":p.nojugable?"Mi primer juego de Roblox (2023). Hoy está retirado.":p.play?"":"Proyecto personal, sin versión pública.";
+  $("#arDet").innerHTML=`<div class="box"><div class="cv">${thumb(p)}</div><div><h3>${esc(p.name)}</h3><p>${esc(p.desc)}</p><div class="tg">${p.tech.map(t=>`<span>${esc(t)}</span>`).join("")}<span>${eraName(p.era)}</span></div>${note?`<div class="ar-st">${note}</div>`:""}<div class="go">${st}<button class="ar-btn" id="arBack">◀ VOLVER</button></div></div></div>`;
+  $("#arDet").classList.add("on"); $("#arBack").onclick=arClose; setTimeout(()=>{ const a=$("#arDet .ar-play"); (a||$("#arBack")).focus(); },50);
+}
+function arClose(){ $("#arDet").classList.remove("on"); tone(400,.05,"square",.03); }
+function openArcade(){
+  pcState="arcade"; $("#fade").style.opacity=0; arRender(); $("#arcade").classList.add("on");
+  window.__room&&window.__room.pause(true); sfx.chime();
+  try{ history.replaceState(null,"","#juegos") }catch(e){}
+}
+function closeArcade(){
+  if(pcState!=="arcade")return; $("#arcade").classList.remove("on"); arClose(); pcState="room";
+  try{ history.replaceState(null,"",location.pathname+location.search) }catch(e){}
+  if(window.__room){ window.__room.pause(false); window.__room.zoomOut(); }
+}
+function enterTV(){ if(pcState!=="room")return; ac(); if(window.__room){ pcState="zoom"; window.__room.zoomIn(()=>openArcade(),"tv"); } else openArcade(); }
+$("#arExit").onclick=closeArcade;
+$("#arMute").onclick=()=>{ const on=musicToggle(); $("#arMute").textContent=on?"■":"♪"; };
+$("#bGames").onclick=()=>enterTV();
+addEventListener("keydown",e=>{
+  if(pcState!=="arcade")return;
+  const items=AR_TABS[arTab].items, det=$("#arDet").classList.contains("on");
+  if(e.key==="Escape"){ det?arClose():closeArcade(); return; }
+  if(det) return;
+  const cols=Math.max(1,Math.round($("#arGrid").clientWidth/ (($("#arGrid .cartg")||{}).offsetWidth+18||200)));
+  let n=arSel;
+  if(e.key==="ArrowRight")n++; else if(e.key==="ArrowLeft")n--; else if(e.key==="ArrowDown")n+=cols; else if(e.key==="ArrowUp")n-=cols;
+  else if(e.key==="Enter"){ arOpen(); return; } else if(e.key==="Tab"){ e.preventDefault(); arTab=(arTab+1)%AR_TABS.length; arSel=0; arRender(); return; } else return;
+  e.preventDefault(); arSel=Math.max(0,Math.min(items.length-1,n)); tone(880,.025,"square",.02); arRender();
+  const el=$("#arGrid .sel"); el&&el.scrollIntoView({block:"nearest"});
+});
+
 /* si el 3D no carga, ir directo al escritorio */
 const DIRECT = location.hash==="#pc";
 window.__fallback=setTimeout(()=>{ if(!window.__room){ $("#loader").style.opacity=0; setTimeout(()=>$("#loader").remove(),800); $("#fade").style.opacity=1; bootPC(); } }, 9000);
@@ -870,6 +967,43 @@ const winLight=new THREE.RectAreaLight?null:null;
 const windowGlow=new THREE.PointLight(0x5865ff,1.4,2.5,2); windowGlow.position.set(WIN.x,WIN.y-.1,-.4); scene.add(windowGlow);
 pick(winG,"rain","🌧️ LLUVIA");
 
+/* ---------- rincón de juegos: mueble, tele y consola ---------- */
+const corner=new THREE.Group(); corner.position.set(1.95,0,-.05); corner.rotation.y=-.55; scene.add(corner);
+box(.78,.46,.46,wood,0,.23,0,corner,.01);
+box(.7,.012,.4,M(0x2b1a10),0,.2,.02,corner);
+const cartCols=[0xd7402a,0x2a5bd7,0xffd447,0x2ab36b,0x7b3fe4,0xff8a1f,0x3dd6ff,0xe9dfc8];
+cartCols.forEach((c,i)=>{ const b=box(.055,.075,.012,M(c,{roughness:.5}),-.3+i*.07,.245,.05,corner); b.rotation.x=-.08; });
+for(let i=0;i<4;i++) box(.13,.17,.022,M([0x1d1d24,0x2a5bd7,0xd7402a,0x2b2b33][i],{roughness:.6}),-.22+i*.15,.1,.08,corner).rotation.z=i===3?.12:0;
+const tvBody=M(0x2a2a30,{roughness:.45});
+box(.52,.42,.4,tvBody,0,.46+.21,-.04,corner,.035);
+box(.38,.3,.2,tvBody,0,.68,-.3,corner,.04);
+box(.43,.33,.02,M(0x111114,{roughness:.3}),-.02,.685,.165,corner,.01);
+const tvTex=ctex(384,288,()=>{});
+const tvScreen=new THREE.Mesh(new THREE.PlaneGeometry(.38,.285,12,10),new THREE.MeshBasicMaterial({map:tvTex,toneMapped:false}));
+{ const pos=tvScreen.geometry.attributes.position; for(let i=0;i<pos.count;i++){ const x=pos.getX(i),y=pos.getY(i); pos.setZ(i,.01-(x*x+y*y)*.14); } }
+tvScreen.position.set(-.02,.685,.178); corner.add(tvScreen);
+[0,1].forEach(i=>cyl(.013,.013,.012,M(0x8a8a90,{metalness:.6,roughness:.3}),.225,.62+i*.06,.17,corner,14).rotation.x=Math.PI/2);
+rod([-.08,.88,-.1],[-.2,1.08,-.16],.004,M(0x999999,{metalness:.8,roughness:.3}),corner);
+rod([.08,.88,-.1],[.22,1.06,-.12],.004,M(0x999999,{metalness:.8,roughness:.3}),corner);
+// consola genérica
+const cons=new THREE.Group(); cons.position.set(.02,.46,.33); corner.add(cons);
+const consM=M(0xc9c9cf,{roughness:.45});
+box(.3,.055,.2,consM,0,.028,0,cons,.012);
+box(.12,.012,.08,M(0x5a5a64),-.04,.06,-.02,cons,.004);
+const cart=box(.1,.07,.016,M(0xd7402a,{roughness:.5}),-.04,.09,-.02,cons); 
+box(.03,.012,.012,M(0x7b3fe4),.1,.06,.06,cons,.004); box(.03,.012,.012,M(0x5a5a64),.1,.06,.03,cons,.004);
+const consLed=sph(.005,new THREE.MeshBasicMaterial({color:0xff3344}),.12,.03,.101,cons);
+// control sobre el piso
+const pad2=new THREE.Group(); pad2.position.set(.25,.012,.52); pad2.rotation.y=.5; corner.add(pad2);
+box(.14,.022,.06,consM,0,0,0,pad2,.01); box(.03,.007,.01,dark,-.04,.013,0,pad2); box(.01,.007,.03,dark,-.04,.013,0,pad2);
+cyl(.008,.008,.007,M(0xd7402a),.035,.013,0,pad2,12); cyl(.008,.008,.007,M(0x2a5bd7),.055,.013,-.01,pad2,12);
+rod([.25,.012,.52],[.1,.47,.38],.003,dark,corner);
+const tvGlow=new THREE.PointLight(0x7a8cff,.9,1.5,2); tvGlow.position.set(1.8,.75,.35); scene.add(tvGlow);
+// tapete
+const rug=new THREE.Mesh(new THREE.CircleGeometry(.75,40),M(0x6b2a5e,{roughness:1})); rug.rotation.x=-Math.PI/2; rug.position.set(1.6,.004,.65); rug.receiveShadow=true; scene.add(rug);
+const rug2=new THREE.Mesh(new THREE.RingGeometry(.6,.66,40),M(0xffb347,{roughness:1})); rug2.rotation.x=-Math.PI/2; rug2.position.set(1.6,.006,.65); scene.add(rug2);
+pick(corner,"tv","🎮 CONSOLA: MIS JUEGOS");
+
 /* ---------- luces de guirnalda ---------- */
 const fairy=[]; const FCOL=[0xffb347,0xff6fae,0x7ff9ff,0xffe14f,0xb26bff];
 for(let i=0;i<34;i++){ const t=i/33, x=-2.3+t*4.6, y=2.6-Math.sin(t*Math.PI*3)*.08-.06; const m=new THREE.Mesh(new THREE.SphereGeometry(.014,10,8),new THREE.MeshBasicMaterial({color:FCOL[i%5],toneMapped:false})); m.position.set(x,y,-.72); m.userData.c=new THREE.Color(FCOL[i%5]); m.userData.p=Math.random()*6; scene.add(m); fairy.push(m); }
@@ -910,6 +1044,19 @@ function drawScreen(t){
   const v=x.createRadialGradient(256,192,120,256,192,330); v.addColorStop(0,"rgba(0,0,0,0)"); v.addColorStop(1,"rgba(0,0,0,.55)"); x.fillStyle=v; x.fillRect(0,0,w,h);
   scr.needsUpdate=true;
 }
+const tvImgs={}; let tvList=[];
+function tvInit(){ tvList=(window.ARCADE_LIST||[]).slice(0,12); tvList.forEach(p=>{ const im=new Image(); im.onerror=()=>{ if(!im.dataset.j){im.dataset.j=1;im.src=`capturas/${p.id}.jpg`} }; im.src=`capturas/${p.id}.png`; tvImgs[p.id]=im; }); }
+function drawTV(t){
+  const x=tvTex.userData.x, w=384, h=288; x.fillStyle="#0b0820"; x.fillRect(0,0,w,h);
+  const n=tvList.length||1, i=Math.floor(t/2.4)%n, p=tvList[i];
+  if(p){ const im=tvImgs[p.id]; if(im&&im.complete&&im.naturalWidth){ x.drawImage(im,32,42,320,180); } else { const c=(CAT[p.cat]||CAT.juego).c; const g=x.createLinearGradient(32,42,352,222); g.addColorStop(0,c[0]); g.addColorStop(1,c[1]); x.fillStyle=g; x.fillRect(32,42,320,180); }
+    x.strokeStyle="#fff"; x.lineWidth=3; x.strokeRect(32,42,320,180);
+    x.textAlign="center"; x.font="13px 'Press Start 2P',monospace"; x.fillStyle="#000"; x.fillText(p.name.toUpperCase().slice(0,22),194,252); x.fillStyle="#ffd447"; x.fillText(p.name.toUpperCase().slice(0,22),192,250); }
+  x.textAlign="center"; x.font="12px 'Press Start 2P',monospace"; x.fillStyle="#7ff9ff"; x.fillText("ELIGE TU JUEGO",192,28);
+  if((t*2|0)%2===0){ x.font="10px 'Press Start 2P',monospace"; x.fillStyle="#fff"; x.fillText("► PRESIONA START",192,276); }
+  x.fillStyle="rgba(0,0,0,.22)"; for(let k=0;k<h;k+=3) x.fillRect(0,k,w,1);
+  tvTex.needsUpdate=true;
+}
 function drawGB(t){ const x=gbTex.userData.x; x.fillStyle="#9bbc0f"; x.fillRect(0,0,128,112); x.fillStyle="#306230"; x.font="14px 'Press Start 2P',monospace"; x.textAlign="center"; x.fillText("JB",64,40); x.fillStyle="#0f380f"; const n=(t*4|0)%6; for(let i=0;i<6;i++){ if(i<=n) x.fillRect(20+i*15,62,11,11) } x.font="8px 'Press Start 2P',monospace"; x.fillText("MINAS",64,96); gbTex.needsUpdate=true; }
 
 /* ---------- postproceso ---------- */
@@ -921,8 +1068,8 @@ const REST={}, look=new THREE.Vector3(), camPos=new THREE.Vector3();
 function layout(){
   const a=innerWidth/innerHeight;
   if(a<.8){ REST.pos=new THREE.Vector3(0,1.5,2.45); REST.look=new THREE.Vector3(0,1.28,-.3); camera.fov=62; }
-  else if(a<1.3){ REST.pos=new THREE.Vector3(.05,1.36,2.35); REST.look=new THREE.Vector3(0,1.1,-.3); camera.fov=50; }
-  else { REST.pos=new THREE.Vector3(.1,1.38,1.9); REST.look=new THREE.Vector3(.02,1.2,-.3); camera.fov=44; }
+  else if(a<1.3){ REST.pos=new THREE.Vector3(.25,1.38,2.45); REST.look=new THREE.Vector3(.15,1.1,-.3); camera.fov=52; }
+  else { REST.pos=new THREE.Vector3(.3,1.36,2.05); REST.look=new THREE.Vector3(.18,1.1,-.3); camera.fov=46; }
   camera.aspect=a; camera.updateProjectionMatrix();
   renderer.setSize(innerWidth,innerHeight,false); if(composer) composer.setSize(innerWidth,innerHeight);
 }
@@ -935,7 +1082,7 @@ let hover=null, mx=0, my=0, panX=0, drag=null, mode="intro", introT=0, zoomT=0, 
 function pickAt(cx,cy){ ndc.set(cx/innerWidth*2-1,-(cy/innerHeight)*2+1); ray.setFromCamera(ndc,camera); const hit=ray.intersectObjects(picks,true)[0]; if(!hit)return null; let o=hit.object; while(o&&!o.userData.pick)o=o.parent; return o; }
 canvas.addEventListener("pointermove",e=>{
   mx=e.clientX/innerWidth-.5; my=e.clientY/innerHeight-.5;
-  if(drag){ panX=Math.max(-.9,Math.min(.9,drag.p-(e.clientX-drag.x)/innerWidth*2.2)); if(Math.abs(e.clientX-drag.x)>6)drag.moved=true; }
+  if(drag){ panX=Math.max(-.9,Math.min(1.5,drag.p-(e.clientX-drag.x)/innerWidth*2.2)); if(Math.abs(e.clientX-drag.x)>6)drag.moved=true; }
   if(mode!=="room"||e.pointerType==="touch"){ return; }
   const o=pickAt(e.clientX,e.clientY); hover=o; canvas.style.cursor=o?"pointer":"default";
   if(o){ tip.textContent=o.userData.pick.label; tip.style.left=e.clientX+"px"; tip.style.top=e.clientY+"px"; tip.style.opacity=1; } else tip.style.opacity=0;
@@ -950,6 +1097,7 @@ function act(o){
   o.userData.bump=1;
   switch(a){
     case "pc": enterPC(); break;
+    case "tv": enterTV(); break;
     case "keys": sfx.click(); setTimeout(sfx.click,70); setTimeout(sfx.click,150); toast("tac tac tac… escribiendo código desde 2015"); break;
     case "lamp": lampOn=!lampOn; sfx.lamp(); spot.intensity=lampOn?9:0; lampFill.intensity=lampOn?1.6:0; bulbMat.color.set(lampOn?0xffd9a0:0x554433); toast(lampOn?"💡 Luz encendida":"🌙 Modo nocturno"); break;
     case "mug": anim.mug=1; sfx.coin(); toast("☕ Café nº 3 del día. Combustible de programador."); break;
@@ -970,11 +1118,11 @@ function act(o){
 }
 
 /* ---------- API para el escritorio ---------- */
-const scrWorld=new THREE.Vector3();
+const scrWorld=new THREE.Vector3(), scrQ=new THREE.Quaternion(); let zoomTarget=null, zoomHalf={h:.18,w:.24};
 const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
 let zoomFrom={pos:new THREE.Vector3(),look:new THREE.Vector3(),fov:42};
 window.__room={
-  zoomIn(cb){ mode="zoom"; zoomT=0; zoomDir=1; zoomCb=cb; zoomFrom={pos:camPos.clone(),look:look.clone(),fov:camera.fov}; tip.style.opacity=0; document.getElementById("hud").style.opacity=0; document.getElementById("hint").style.opacity=0; canvas.style.cursor="default"; },
+  zoomIn(cb,which){ zoomTarget=which==="tv"?tvScreen:screen; zoomHalf=which==="tv"?{h:.14,w:.19}:{h:.18,w:.24}; mode="zoom"; zoomT=0; zoomDir=1; zoomCb=cb; zoomFrom={pos:camPos.clone(),look:look.clone(),fov:camera.fov}; tip.style.opacity=0; document.getElementById("hud").style.opacity=0; document.getElementById("hint").style.opacity=0; canvas.style.cursor="default"; },
   zoomOut(){ paused=false; mode="zoom"; zoomT=1; zoomDir=-1; zoomCb=()=>{ mode="room"; document.getElementById("hud").style.opacity=1; }; document.getElementById("fade").style.opacity=0; },
   pause(v){ paused=v; },
 };
@@ -991,9 +1139,9 @@ function frame(){
   if(mode==="room"){ const tp=REST.pos.clone().add(new THREE.Vector3(mx*.25+panX,-my*.12,0)); camPos.lerp(tp,.05); const tl=REST.look.clone().add(new THREE.Vector3(mx*.12+panX*.85,-my*.06,0)); look.lerp(tl,.06); }
   if(mode==="zoom"){
     const rdt=Math.min((performance.now()-(window.__zl||performance.now()))/1000,.25); zoomT=Math.max(0,Math.min(1,zoomT+zoomDir*rdt/1.5)); const k=ease(zoomT);
-    screen.getWorldPosition(scrWorld);
-    const a=camera.aspect, fovEnd=40, distH=.18/Math.tan(THREE.MathUtils.degToRad(fovEnd/2)), distW=.24/(Math.tan(THREE.MathUtils.degToRad(fovEnd/2))*a);
-    const endPos=scrWorld.clone().add(new THREE.Vector3(0,0,Math.min(distH,distW)*.92+.012));
+    const zt=zoomTarget||screen; zt.getWorldPosition(scrWorld); zt.getWorldQuaternion(scrQ);
+    const a=camera.aspect, fovEnd=40, distH=zoomHalf.h/Math.tan(THREE.MathUtils.degToRad(fovEnd/2)), distW=zoomHalf.w/(Math.tan(THREE.MathUtils.degToRad(fovEnd/2))*a);
+    const endPos=scrWorld.clone().add(new THREE.Vector3(0,0,1).applyQuaternion(scrQ).multiplyScalar(Math.min(distH,distW)*.92+.012));
     const from = zoomDir>0 ? zoomFrom : {pos:REST.pos,look:REST.look,fov:camera.userData.restFov||camera.fov};
     camPos.lerpVectors(from.pos,endPos,k); look.lerpVectors(from.look,scrWorld,k);
     camera.fov=THREE.MathUtils.lerp(from.fov,fovEnd,k); camera.updateProjectionMatrix();
@@ -1004,7 +1152,8 @@ function frame(){
   camera.position.copy(camPos); camera.lookAt(look);
 
   // objetos
-  scrAcc+=dt; if(scrAcc>.07){ scrAcc=0; drawScreen(t); drawGB(t); drawCity(); }
+  scrAcc+=dt; if(scrAcc>.07){ scrAcc=0; drawScreen(t); drawGB(t); drawCity(); drawTV(t); }
+  consLed.material.color.setHex((t*2|0)%2?0xff3344:0x551119);
   led.material.color.setHex((t*3|0)%5?0x33ff66:0x114422);
   screenGlow.intensity=1.1+Math.sin(t*20)*.04+Math.sin(t*3)*.08;
   steam.forEach(s=>{ const p=(s.userData.o+t*.22)%1; s.position.set(Math.sin(p*6+s.userData.o*9)*.02,.11+p*.28,Math.cos(p*5)*.01); const sc=.04+p*.09*(1+anim.mug*2); s.scale.set(sc,sc,sc); s.material.opacity=Math.sin(p*Math.PI)*(.35+anim.mug*.4); });
@@ -1032,14 +1181,15 @@ lbar.style.width="70%";
 (async()=>{
   try{ await Promise.race([Promise.all([document.fonts.load("16px 'Press Start 2P'"),document.fonts.load("20px VT323")]),new Promise(r=>setTimeout(r,2500))]); }catch(e){}
   // redibujar texturas que usan fuentes
-  
-  drawScreen(0); drawGB(0); drawCity();
+  [mugTex,neonTex,wkTex].forEach(t=>{});
+  tvInit(); drawScreen(0); drawGB(0); drawCity(); drawTV(0);
   renderer.compile(scene,camera);
   lbar.style.width="100%";
   clearTimeout(window.__fallback);
   frame();
   const L=document.getElementById("loader"); setTimeout(()=>{L.style.opacity=0;setTimeout(()=>L.remove(),800)},250);
   if(location.hash==="#pc"){ mode="room"; camPos.copy(REST.pos); enterPC(); }
+  else if(location.hash==="#juegos"){ mode="room"; camPos.copy(REST.pos); enterTV(); }
   setTimeout(()=>{ const h=document.getElementById("hint"); if(h) h.style.opacity=0; },9000);
 })();
 </script>
