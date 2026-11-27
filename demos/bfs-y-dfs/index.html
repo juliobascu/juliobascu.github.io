@@ -1,0 +1,1442 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algoritmos BFS y DFS - Inteligencia Artificial</title>
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    color: #333;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+header p {
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+
+.controls {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.controls > div {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 150px;
+}
+
+.controls label {
+    font-weight: 600;
+    color: #555;
+    font-size: 0.9em;
+}
+
+.controls select, .controls input[type="range"] {
+    padding: 8px 12px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.controls select:focus, .controls input[type="range"]:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    min-width: auto;
+}
+
+.buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+#start-btn {
+    background: #4CAF50;
+    color: white;
+}
+
+#start-btn:hover {
+    background: #45a049;
+    transform: translateY(-2px);
+}
+
+#reset-btn {
+    background: #f44336;
+    color: white;
+}
+
+#reset-btn:hover {
+    background: #da190b;
+    transform: translateY(-2px);
+}
+
+#step-btn {
+    background: #2196F3;
+    color: white;
+}
+
+#step-btn:hover {
+    background: #1976D2;
+    transform: translateY(-2px);
+}
+
+#regenerate-maze-btn {
+    background: #9C27B0;
+    color: white;
+}
+
+#regenerate-maze-btn:hover {
+    background: #7B1FA2;
+    transform: translateY(-2px);
+}
+
+#speed-value {
+    font-weight: 600;
+    color: #667eea;
+    text-align: center;
+}
+
+.main-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.graph-container {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+#graph-svg {
+    width: 100%;
+    height: 500px;
+    border: 2px solid #f0f0f0;
+    border-radius: 10px;
+    background: #fafafa;
+}
+
+.info-panel {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.info-panel h3 {
+    color: #333;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.info-panel h4 {
+    color: #555;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.info-panel p {
+    line-height: 1.6;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.info-panel ul {
+    margin-left: 20px;
+    color: #666;
+}
+
+.info-panel li {
+    margin-bottom: 5px;
+    line-height: 1.4;
+}
+
+.current-step, .queue-stack, .visited {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+}
+
+#step-info, #queue-display, #visited-display {
+    font-family: 'Courier New', monospace;
+    background: #2d3748;
+    color: #e2e8f0;
+    padding: 10px;
+    border-radius: 5px;
+    min-height: 40px;
+    word-wrap: break-word;
+}
+
+/* Estilos para los nodos del grafo */
+.node {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.node circle {
+    stroke-width: 3px;
+    transition: all 0.3s ease;
+}
+
+.node text {
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    text-anchor: middle;
+    dominant-baseline: central;
+}
+
+.node.default circle {
+    fill: #e3f2fd;
+    stroke: #2196f3;
+    stroke-width: 3px;
+    transition: all 0.3s ease;
+}
+
+.node.visited circle {
+    fill: #4caf50;
+    stroke: #2e7d32;
+    stroke-width: 4px;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 8px rgba(76, 175, 80, 0.6));
+}
+
+.node.current circle {
+    fill: #ff9800;
+    stroke: #f57c00;
+    stroke-width: 6px;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 12px rgba(255, 152, 0, 0.8));
+}
+
+.node.path circle {
+    fill: #e91e63;
+    stroke: #c2185b;
+    stroke-width: 4px;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 8px rgba(233, 30, 99, 0.6));
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Estilos para las aristas */
+.edge {
+    stroke: #999;
+    stroke-width: 2px;
+    fill: none;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+}
+
+.edge.visited {
+    stroke: #4caf50;
+    stroke-width: 4px;
+    opacity: 1;
+    filter: drop-shadow(0 0 4px rgba(76, 175, 80, 0.4));
+}
+
+.edge.current {
+    stroke: #ff9800;
+    stroke-width: 5px;
+    stroke-dasharray: 8,4;
+    animation: dash 1.5s linear infinite;
+    opacity: 1;
+    filter: drop-shadow(0 0 6px rgba(255, 152, 0, 0.6));
+}
+
+@keyframes dash {
+    to { stroke-dashoffset: -10; }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .buttons {
+        flex-direction: column;
+    }
+    
+    header h1 {
+        font-size: 2em;
+    }
+}
+
+/* Estilos para el estado de los algoritmos */
+.algorithm-info {
+    display: none;
+}
+
+.algorithm-info.active {
+    display: block;
+}
+
+/* Estilos para el laberinto */
+.maze-cell {
+    transition: all 0.3s ease;
+}
+
+.maze-cell.visited {
+    fill: #4caf50 !important;
+    stroke: #2e7d32 !important;
+    stroke-width: 2px !important;
+    filter: drop-shadow(0 0 4px rgba(76, 175, 80, 0.6));
+}
+
+.maze-cell.current {
+    fill: #ff9800 !important;
+    stroke: #f57c00 !important;
+    stroke-width: 3px !important;
+    filter: drop-shadow(0 0 8px rgba(255, 152, 0, 0.8));
+    animation: pulse 0.8s infinite;
+}
+
+.maze-cell.path {
+    fill: #e91e63 !important;
+    stroke: #c2185b !important;
+    stroke-width: 2px !important;
+    filter: drop-shadow(0 0 4px rgba(233, 30, 99, 0.6));
+}
+
+.maze-wall {
+    fill: #333;
+    stroke: #000;
+    stroke-width: 1px;
+}
+
+.maze-start {
+    fill: #4CAF50;
+    stroke: #2e7d32;
+    stroke-width: 2px;
+    filter: drop-shadow(0 0 6px rgba(76, 175, 80, 0.8));
+}
+
+.maze-end {
+    fill: #F44336;
+    stroke: #c62828;
+    stroke-width: 2px;
+    filter: drop-shadow(0 0 6px rgba(244, 67, 54, 0.8));
+}
+
+/* Animaciones de transición */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Algoritmos de Búsqueda en Grafos</h1>
+            <p>BFS (Búsqueda en Anchura) y DFS (Búsqueda en Profundidad)</p>
+        </header>
+
+        <div class="controls">
+            <div class="algorithm-selector">
+                <label for="algorithm">Seleccionar Algoritmo:</label>
+                <select id="algorithm">
+                    <option value="bfs">BFS - Búsqueda en Anchura</option>
+                    <option value="dfs">DFS - Búsqueda en Profundidad</option>
+                </select>
+            </div>
+
+            <div class="graph-selector">
+                <label for="graph">Gráfico de Ejemplo:</label>
+                <select id="graph">
+                    <option value="simple">Gráfico Simple</option>
+                    <option value="tree">Árbol Binario</option>
+                    <option value="complex">Gráfico Complejo</option>
+                    <option value="maze">Laberinto</option>
+                </select>
+            </div>
+
+            <div class="speed-control">
+                <label for="speed">Velocidad:</label>
+                <input type="range" id="speed" min="100" max="2000" value="800">
+                <span id="speed-value">800ms</span>
+            </div>
+
+            <div class="buttons">
+                <button id="start-btn">Iniciar Animación</button>
+                <button id="reset-btn">Reiniciar</button>
+                <button id="step-btn">Paso a Paso</button>
+                <button id="regenerate-maze-btn" style="display: none;">Nuevo Laberinto</button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="graph-container">
+                <svg id="graph-svg" width="800" height="500"></svg>
+            </div>
+
+            <div class="info-panel">
+                <h3>Información del Algoritmo</h3>
+                <div id="algorithm-info">
+                    <h4>BFS - Búsqueda en Anchura</h4>
+                    <p>Explora todos los nodos en el mismo nivel antes de pasar al siguiente nivel.</p>
+                    <ul>
+                        <li>Usa una cola (FIFO)</li>
+                        <li>Garantiza el camino más corto</li>
+                        <li>Complejidad: O(V + E)</li>
+                    </ul>
+                </div>
+
+                <div class="current-step">
+                    <h4>Paso Actual:</h4>
+                    <div id="step-info">Selecciona un algoritmo y haz clic en "Iniciar Animación"</div>
+                </div>
+
+                <div class="queue-stack">
+                    <h4>Cola/Pila:</h4>
+                    <div id="queue-display"></div>
+                </div>
+
+                <div class="visited">
+                    <h4>Nodos Visitados:</h4>
+                    <div id="visited-display"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+class GraphVisualizer {
+    constructor() {
+        this.svg = document.getElementById('graph-svg');
+        this.currentGraph = null;
+        this.currentAlgorithm = 'bfs';
+        this.isRunning = false;
+        this.animationSpeed = 800;
+        this.stepIndex = 0;
+        this.animationSteps = [];
+        
+        this.initializeEventListeners();
+        this.loadGraph('simple');
+        this.updateAlgorithmInfo();
+    }
+
+    generateSolvableMaze() {
+        const width = 12;
+        const height = 8;
+        const cellSize = 35;
+        
+        // Crear una grilla donde true = pared, false = pasillo
+        const maze = Array(height).fill().map(() => Array(width).fill(true));
+        
+        // Asegurar que el inicio y fin estén libres
+        maze[0][0] = false; // inicio
+        maze[height-1][width-1] = false; // fin
+        
+        // Usar algoritmo de generación de laberintos (Recursive Backtracking)
+        const stack = [{x: 0, y: 0}];
+        const visited = new Set();
+        visited.add('0,0');
+        
+        const directions = [
+            {dx: 0, dy: -1}, // arriba
+            {dx: 1, dy: 0},  // derecha
+            {dx: 0, dy: 1},  // abajo
+            {dx: -1, dy: 0}   // izquierda
+        ];
+        
+        while (stack.length > 0) {
+            const current = stack[stack.length - 1];
+            const neighbors = [];
+            
+            // Encontrar vecinos no visitados
+            directions.forEach(dir => {
+                const newX = current.x + dir.dx;
+                const newY = current.y + dir.dy;
+                
+                if (newX >= 0 && newX < width && newY >= 0 && newY < height) {
+                    const key = `${newX},${newY}`;
+                    if (!visited.has(key)) {
+                        neighbors.push({x: newX, y: newY, dir: dir});
+                    }
+                }
+            });
+            
+            if (neighbors.length > 0) {
+                // Elegir un vecino aleatorio
+                const next = neighbors[Math.floor(Math.random() * neighbors.length)];
+                const key = `${next.x},${next.y}`;
+                
+                // Marcar como visitado y crear pasillo
+                visited.add(key);
+                maze[next.y][next.x] = false;
+                
+                // Crear pasillo entre celdas
+                const wallX = current.x + next.dir.dx;
+                const wallY = current.y + next.dir.dy;
+                if (wallX >= 0 && wallX < width && wallY >= 0 && wallY < height) {
+                    maze[wallY][wallX] = false;
+                }
+                
+                stack.push({x: next.x, y: next.y});
+            } else {
+                stack.pop();
+            }
+        }
+        
+        // Convertir la grilla a lista de paredes
+        const walls = [];
+        for (let y = 0; y < height; y++) {
+            for (let x = 0; x < width; x++) {
+                if (maze[y][x]) {
+                    walls.push({x: x, y: y});
+                }
+            }
+        }
+        
+        return {
+            type: 'maze',
+            width: width,
+            height: height,
+            cellSize: cellSize,
+            start: {x: 0, y: 0},
+            end: {x: width-1, y: height-1},
+            walls: walls
+        };
+    }
+
+    initializeEventListeners() {
+        document.getElementById('algorithm').addEventListener('change', (e) => {
+            this.currentAlgorithm = e.target.value;
+            this.updateAlgorithmInfo();
+            this.resetVisualization();
+        });
+
+        document.getElementById('graph').addEventListener('change', (e) => {
+            this.loadGraph(e.target.value);
+            this.resetVisualization();
+        });
+
+        document.getElementById('speed').addEventListener('input', (e) => {
+            this.animationSpeed = parseInt(e.target.value);
+            document.getElementById('speed-value').textContent = this.animationSpeed + 'ms';
+        });
+
+        document.getElementById('start-btn').addEventListener('click', () => {
+            this.startAnimation();
+        });
+
+        document.getElementById('reset-btn').addEventListener('click', () => {
+            this.resetVisualization();
+        });
+
+        document.getElementById('step-btn').addEventListener('click', () => {
+            this.nextStep();
+        });
+
+        document.getElementById('regenerate-maze-btn').addEventListener('click', () => {
+            this.loadGraph('maze');
+            this.resetVisualization();
+        });
+    }
+
+    updateAlgorithmInfo() {
+        const info = document.getElementById('algorithm-info');
+        const isMaze = this.currentGraph && this.currentGraph.type === 'maze';
+        
+        if (this.currentAlgorithm === 'bfs') {
+            if (isMaze) {
+                info.innerHTML = `
+                    <h4>BFS - Búsqueda en Anchura (Laberinto)</h4>
+                    <p>Encuentra el camino más corto desde el inicio (verde) hasta la meta (rojo).</p>
+                    <ul>
+                        <li>Usa una cola (FIFO)</li>
+                        <li>Garantiza el camino más corto</li>
+                        <li>Explora por niveles de distancia</li>
+                        <li>Ideal para pathfinding en videojuegos</li>
+                    </ul>
+                `;
+            } else {
+                info.innerHTML = `
+                    <h4>BFS - Búsqueda en Anchura</h4>
+                    <p>Explora todos los nodos en el mismo nivel antes de pasar al siguiente nivel.</p>
+                    <ul>
+                        <li>Usa una cola (FIFO)</li>
+                        <li>Garantiza el camino más corto</li>
+                        <li>Complejidad: O(V + E)</li>
+                    </ul>
+                `;
+            }
+        } else {
+            if (isMaze) {
+                info.innerHTML = `
+                    <h4>DFS - Búsqueda en Profundidad (Laberinto)</h4>
+                    <p>Explora profundamente hasta encontrar la meta, luego retrocede si es necesario.</p>
+                    <ul>
+                        <li>Usa una pila (LIFO)</li>
+                        <li>Puede no encontrar el camino más corto</li>
+                        <li>Explora una rama completamente antes de retroceder</li>
+                        <li>Útil para exploración exhaustiva</li>
+                    </ul>
+                `;
+            } else {
+                info.innerHTML = `
+                    <h4>DFS - Búsqueda en Profundidad</h4>
+                    <p>Explora lo más profundo posible antes de retroceder.</p>
+                    <ul>
+                        <li>Usa una pila (LIFO) o recursión</li>
+                        <li>Puede no encontrar el camino más corto</li>
+                        <li>Complejidad: O(V + E)</li>
+                    </ul>
+                `;
+            }
+        }
+    }
+
+    loadGraph(graphType) {
+        this.clearGraph();
+        
+        const graphs = {
+            simple: {
+                nodes: [
+                    {id: 'A', x: 200, y: 100},
+                    {id: 'B', x: 400, y: 100},
+                    {id: 'C', x: 300, y: 200},
+                    {id: 'D', x: 200, y: 300},
+                    {id: 'E', x: 400, y: 300},
+                    {id: 'F', x: 300, y: 400}
+                ],
+                edges: [
+                    {from: 'A', to: 'B'},
+                    {from: 'A', to: 'C'},
+                    {from: 'B', to: 'C'},
+                    {from: 'B', to: 'E'},
+                    {from: 'C', to: 'D'},
+                    {from: 'C', to: 'E'},
+                    {from: 'D', to: 'F'},
+                    {from: 'E', to: 'F'}
+                ]
+            },
+            maze: this.generateSolvableMaze(),
+            tree: {
+                nodes: [
+                    {id: '1', x: 400, y: 50},
+                    {id: '2', x: 200, y: 150},
+                    {id: '3', x: 600, y: 150},
+                    {id: '4', x: 100, y: 250},
+                    {id: '5', x: 300, y: 250},
+                    {id: '6', x: 500, y: 250},
+                    {id: '7', x: 700, y: 250},
+                    {id: '8', x: 50, y: 350},
+                    {id: '9', x: 150, y: 350},
+                    {id: '10', x: 250, y: 350},
+                    {id: '11', x: 350, y: 350}
+                ],
+                edges: [
+                    {from: '1', to: '2'},
+                    {from: '1', to: '3'},
+                    {from: '2', to: '4'},
+                    {from: '2', to: '5'},
+                    {from: '3', to: '6'},
+                    {from: '3', to: '7'},
+                    {from: '4', to: '8'},
+                    {from: '4', to: '9'},
+                    {from: '5', to: '10'},
+                    {from: '5', to: '11'}
+                ]
+            },
+            complex: {
+                nodes: [
+                    {id: 'A', x: 150, y: 100},
+                    {id: 'B', x: 300, y: 100},
+                    {id: 'C', x: 450, y: 100},
+                    {id: 'D', x: 600, y: 100},
+                    {id: 'E', x: 150, y: 200},
+                    {id: 'F', x: 300, y: 200},
+                    {id: 'G', x: 450, y: 200},
+                    {id: 'H', x: 600, y: 200},
+                    {id: 'I', x: 225, y: 300},
+                    {id: 'J', x: 375, y: 300},
+                    {id: 'K', x: 525, y: 300},
+                    {id: 'L', x: 300, y: 400}
+                ],
+                edges: [
+                    {from: 'A', to: 'B'}, {from: 'A', to: 'E'},
+                    {from: 'B', to: 'C'}, {from: 'B', to: 'F'},
+                    {from: 'C', to: 'D'}, {from: 'C', to: 'G'},
+                    {from: 'D', to: 'H'},
+                    {from: 'E', to: 'F'}, {from: 'E', to: 'I'},
+                    {from: 'F', to: 'G'}, {from: 'F', to: 'J'},
+                    {from: 'G', to: 'H'}, {from: 'G', to: 'K'},
+                    {from: 'H', to: 'K'},
+                    {from: 'I', to: 'J'}, {from: 'I', to: 'L'},
+                    {from: 'J', to: 'K'}, {from: 'J', to: 'L'},
+                    {from: 'K', to: 'L'}
+                ]
+            }
+        };
+
+        this.currentGraph = graphs[graphType];
+        this.drawGraph();
+        
+        // Mostrar/ocultar botón de regenerar laberinto
+        const regenerateBtn = document.getElementById('regenerate-maze-btn');
+        if (graphType === 'maze') {
+            regenerateBtn.style.display = 'inline-block';
+        } else {
+            regenerateBtn.style.display = 'none';
+        }
+        
+        // Actualizar información del algoritmo
+        this.updateAlgorithmInfo();
+    }
+
+    drawGraph() {
+        if (this.currentGraph.type === 'maze') {
+            this.drawMaze();
+        } else {
+            // Dibujar aristas
+            this.currentGraph.edges.forEach(edge => {
+                const fromNode = this.currentGraph.nodes.find(n => n.id === edge.from);
+                const toNode = this.currentGraph.nodes.find(n => n.id === edge.to);
+                
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', fromNode.x);
+                line.setAttribute('y1', fromNode.y);
+                line.setAttribute('x2', toNode.x);
+                line.setAttribute('y2', toNode.y);
+                line.setAttribute('class', 'edge');
+                line.setAttribute('id', `edge-${edge.from}-${edge.to}`);
+                this.svg.appendChild(line);
+            });
+
+            // Dibujar nodos
+            this.currentGraph.nodes.forEach(node => {
+                const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                group.setAttribute('class', 'node default');
+                group.setAttribute('id', `node-${node.id}`);
+
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', node.x);
+                circle.setAttribute('cy', node.y);
+                circle.setAttribute('r', 25);
+                group.appendChild(circle);
+
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', node.x);
+                text.setAttribute('y', node.y);
+                text.textContent = node.id;
+                group.appendChild(text);
+
+                this.svg.appendChild(group);
+            });
+        }
+    }
+
+    drawMaze() {
+        const maze = this.currentGraph;
+        const cellSize = maze.cellSize;
+        const offsetX = 50;
+        const offsetY = 50;
+
+        // Dibujar fondo del laberinto
+        const background = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        background.setAttribute('x', offsetX);
+        background.setAttribute('y', offsetY);
+        background.setAttribute('width', maze.width * cellSize);
+        background.setAttribute('height', maze.height * cellSize);
+        background.setAttribute('fill', '#f0f0f0');
+        background.setAttribute('stroke', '#333');
+        background.setAttribute('stroke-width', '2');
+        this.svg.appendChild(background);
+
+        // Dibujar paredes
+        maze.walls.forEach(wall => {
+            const wallRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            wallRect.setAttribute('x', offsetX + wall.x * cellSize);
+            wallRect.setAttribute('y', offsetY + wall.y * cellSize);
+            wallRect.setAttribute('width', cellSize);
+            wallRect.setAttribute('height', cellSize);
+            wallRect.setAttribute('fill', '#333');
+            wallRect.setAttribute('class', 'maze-wall');
+            this.svg.appendChild(wallRect);
+        });
+
+        // Dibujar celdas del laberinto
+        for (let y = 0; y < maze.height; y++) {
+            for (let x = 0; x < maze.width; x++) {
+                const isWall = maze.walls.some(wall => wall.x === x && wall.y === y);
+                if (!isWall) {
+                    const cell = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                    cell.setAttribute('x', offsetX + x * cellSize);
+                    cell.setAttribute('y', offsetY + y * cellSize);
+                    cell.setAttribute('width', cellSize);
+                    cell.setAttribute('height', cellSize);
+                    cell.setAttribute('fill', '#fff');
+                    cell.setAttribute('stroke', '#ddd');
+                    cell.setAttribute('stroke-width', '1');
+                    cell.setAttribute('class', 'maze-cell');
+                    cell.setAttribute('id', `cell-${x}-${y}`);
+                    this.svg.appendChild(cell);
+                }
+            }
+        }
+
+        // Dibujar punto de inicio
+        const start = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        start.setAttribute('cx', offsetX + maze.start.x * cellSize + cellSize / 2);
+        start.setAttribute('cy', offsetY + maze.start.y * cellSize + cellSize / 2);
+        start.setAttribute('r', cellSize / 3);
+        start.setAttribute('fill', '#4CAF50');
+        start.setAttribute('class', 'maze-start');
+        start.setAttribute('id', 'maze-start');
+        this.svg.appendChild(start);
+
+        // Dibujar punto de meta
+        const end = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        end.setAttribute('cx', offsetX + maze.end.x * cellSize + cellSize / 2);
+        end.setAttribute('cy', offsetY + maze.end.y * cellSize + cellSize / 2);
+        end.setAttribute('r', cellSize / 3);
+        end.setAttribute('fill', '#F44336');
+        end.setAttribute('class', 'maze-end');
+        end.setAttribute('id', 'maze-end');
+        this.svg.appendChild(end);
+    }
+
+    clearGraph() {
+        while (this.svg.firstChild) {
+            this.svg.removeChild(this.svg.firstChild);
+        }
+    }
+
+    resetVisualization() {
+        this.isRunning = false;
+        this.stepIndex = 0;
+        this.animationSteps = [];
+        
+        if (this.currentGraph && this.currentGraph.type === 'maze') {
+            // Resetear celdas del laberinto
+            document.querySelectorAll('.maze-cell').forEach(cell => {
+                cell.setAttribute('class', 'maze-cell');
+            });
+        } else {
+            // Resetear todos los nodos y aristas
+            document.querySelectorAll('.node').forEach(node => {
+                node.setAttribute('class', 'node default');
+                node.style.animation = 'none';
+            });
+            document.querySelectorAll('.edge').forEach(edge => {
+                edge.setAttribute('class', 'edge');
+            });
+        }
+
+        // Limpiar información
+        document.getElementById('step-info').textContent = 'Selecciona un algoritmo y haz clic en "Iniciar Animación"';
+        document.getElementById('queue-display').textContent = '';
+        document.getElementById('visited-display').textContent = '';
+    }
+
+    startAnimation() {
+        if (this.isRunning) return;
+        
+        this.resetVisualization();
+        this.isRunning = true;
+        
+        // Generar pasos del algoritmo
+        this.generateAnimationSteps();
+        
+        // Ejecutar animación
+        this.executeNextStep();
+    }
+
+    generateAnimationSteps() {
+        this.animationSteps = [];
+        
+        if (this.currentGraph.type === 'maze') {
+            if (this.currentAlgorithm === 'bfs') {
+                this.generateBFSSteps();
+            } else {
+                this.generateDFSSteps();
+            }
+        } else {
+            const startNode = this.currentGraph.nodes[0].id;
+            
+            if (this.currentAlgorithm === 'bfs') {
+                this.generateBFSSteps(startNode);
+            } else {
+                this.generateDFSSteps(startNode);
+            }
+        }
+    }
+
+    generateBFSSteps(startNode) {
+        if (this.currentGraph.type === 'maze') {
+            this.generateMazeBFSSteps();
+        } else {
+            const visited = new Set();
+            const queue = [startNode];
+            const parent = {};
+            const steps = [];
+
+            steps.push({
+                type: 'init',
+                message: `Iniciando BFS desde el nodo ${startNode}`,
+                queue: [...queue],
+                visited: [...visited]
+            });
+
+            while (queue.length > 0) {
+                const current = queue.shift();
+                
+                if (visited.has(current)) continue;
+                
+                visited.add(current);
+                
+                steps.push({
+                    type: 'visit',
+                    node: current,
+                    message: `Visitando nodo ${current}`,
+                    queue: [...queue],
+                    visited: [...visited]
+                });
+
+                // Encontrar nodos adyacentes
+                const neighbors = this.getNeighbors(current);
+                const newNeighbors = neighbors.filter(n => !visited.has(n) && !queue.includes(n));
+                
+                if (newNeighbors.length > 0) {
+                    steps.push({
+                        type: 'discover',
+                        node: current,
+                        neighbors: newNeighbors,
+                        message: `Descubriendo nodos adyacentes: ${newNeighbors.join(', ')}`,
+                        queue: [...queue, ...newNeighbors],
+                        visited: [...visited]
+                    });
+                }
+
+                // Agregar vecinos a la cola
+                newNeighbors.forEach(neighbor => {
+                    parent[neighbor] = current;
+                    queue.push(neighbor);
+                });
+
+                steps.push({
+                    type: 'queue_update',
+                    node: current,
+                    message: `Actualizando cola: [${queue.join(', ')}]`,
+                    queue: [...queue],
+                    visited: [...visited]
+                });
+            }
+
+            this.animationSteps = steps;
+        }
+    }
+
+    generateDFSSteps(startNode) {
+        if (this.currentGraph.type === 'maze') {
+            this.generateMazeDFSSteps();
+        } else {
+            const visited = new Set();
+            const stack = [startNode];
+            const steps = [];
+
+            steps.push({
+                type: 'init',
+                message: `Iniciando DFS desde el nodo ${startNode}`,
+                stack: [...stack],
+                visited: [...visited]
+            });
+
+            while (stack.length > 0) {
+                const current = stack.pop();
+                
+                if (visited.has(current)) continue;
+                
+                visited.add(current);
+                
+                steps.push({
+                    type: 'visit',
+                    node: current,
+                    message: `Visitando nodo ${current}`,
+                    stack: [...stack],
+                    visited: [...visited]
+                });
+
+                // Encontrar nodos adyacentes
+                const neighbors = this.getNeighbors(current);
+                const newNeighbors = neighbors.filter(n => !visited.has(n) && !stack.includes(n));
+                
+                if (newNeighbors.length > 0) {
+                    steps.push({
+                        type: 'discover',
+                        node: current,
+                        neighbors: newNeighbors,
+                        message: `Descubriendo nodos adyacentes: ${newNeighbors.join(', ')}`,
+                        stack: [...stack, ...newNeighbors.reverse()],
+                        visited: [...visited]
+                    });
+                }
+
+                // Agregar vecinos a la pila (en orden inverso para mantener orden)
+                newNeighbors.reverse().forEach(neighbor => {
+                    stack.push(neighbor);
+                });
+
+                steps.push({
+                    type: 'stack_update',
+                    node: current,
+                    message: `Actualizando pila: [${stack.join(', ')}]`,
+                    stack: [...stack],
+                    visited: [...visited]
+                });
+            }
+
+            this.animationSteps = steps;
+        }
+    }
+
+    getNeighbors(nodeId) {
+        if (this.currentGraph.type === 'maze') {
+            return this.getMazeNeighbors(nodeId);
+        } else {
+            const neighbors = [];
+            this.currentGraph.edges.forEach(edge => {
+                if (edge.from === nodeId) {
+                    neighbors.push(edge.to);
+                } else if (edge.to === nodeId) {
+                    neighbors.push(edge.from);
+                }
+            });
+            return neighbors;
+        }
+    }
+
+    getMazeNeighbors(cellId) {
+        const [x, y] = cellId.split('-').map(Number);
+        const maze = this.currentGraph;
+        const neighbors = [];
+        
+        // Direcciones: arriba, derecha, abajo, izquierda
+        const directions = [
+            {dx: 0, dy: -1}, // arriba
+            {dx: 1, dy: 0},  // derecha
+            {dx: 0, dy: 1},  // abajo
+            {dx: -1, dy: 0}   // izquierda
+        ];
+        
+        directions.forEach(dir => {
+            const newX = x + dir.dx;
+            const newY = y + dir.dy;
+            
+            // Verificar límites
+            if (newX >= 0 && newX < maze.width && newY >= 0 && newY < maze.height) {
+                // Verificar que no sea una pared
+                const isWall = maze.walls.some(wall => wall.x === newX && wall.y === newY);
+                if (!isWall) {
+                    neighbors.push(`${newX}-${newY}`);
+                }
+            }
+        });
+        
+        return neighbors;
+    }
+
+    generateMazeBFSSteps() {
+        const maze = this.currentGraph;
+        const start = `${maze.start.x}-${maze.start.y}`;
+        const end = `${maze.end.x}-${maze.end.y}`;
+        
+        const visited = new Set();
+        const queue = [start];
+        const parent = {};
+        const steps = [];
+
+        steps.push({
+            type: 'init',
+            message: `Iniciando BFS en laberinto desde (${maze.start.x}, ${maze.start.y})`,
+            queue: [...queue],
+            visited: [...visited],
+            currentCell: start
+        });
+
+        while (queue.length > 0) {
+            const current = queue.shift();
+            
+            if (visited.has(current)) continue;
+            
+            visited.add(current);
+            
+            steps.push({
+                type: 'visit',
+                node: current,
+                message: `Visitando celda (${current.split('-')[0]}, ${current.split('-')[1]})`,
+                queue: [...queue],
+                visited: [...visited],
+                currentCell: current
+            });
+
+            // Verificar si llegamos a la meta
+            if (current === end) {
+                steps.push({
+                    type: 'found',
+                    message: `¡Meta encontrada en (${maze.end.x}, ${maze.end.y})!`,
+                    queue: [...queue],
+                    visited: [...visited],
+                    currentCell: current,
+                    path: this.reconstructPath(parent, start, end)
+                });
+                break;
+            }
+
+            // Encontrar celdas adyacentes
+            const neighbors = this.getMazeNeighbors(current);
+            const newNeighbors = neighbors.filter(n => !visited.has(n) && !queue.includes(n));
+            
+            if (newNeighbors.length > 0) {
+                steps.push({
+                    type: 'discover',
+                    node: current,
+                    neighbors: newNeighbors,
+                    message: `Descubriendo celdas adyacentes: ${newNeighbors.map(n => `(${n.split('-')[0]}, ${n.split('-')[1]})`).join(', ')}`,
+                    queue: [...queue, ...newNeighbors],
+                    visited: [...visited],
+                    currentCell: current
+                });
+            }
+
+            // Agregar vecinos a la cola
+            newNeighbors.forEach(neighbor => {
+                parent[neighbor] = current;
+                queue.push(neighbor);
+            });
+
+            steps.push({
+                type: 'queue_update',
+                node: current,
+                message: `Actualizando cola: [${queue.map(q => `(${q.split('-')[0]}, ${q.split('-')[1]})`).join(', ')}]`,
+                queue: [...queue],
+                visited: [...visited],
+                currentCell: current
+            });
+        }
+
+        this.animationSteps = steps;
+    }
+
+    generateMazeDFSSteps() {
+        const maze = this.currentGraph;
+        const start = `${maze.start.x}-${maze.start.y}`;
+        const end = `${maze.end.x}-${maze.end.y}`;
+        
+        const visited = new Set();
+        const stack = [start];
+        const parent = {};
+        const steps = [];
+
+        steps.push({
+            type: 'init',
+            message: `Iniciando DFS en laberinto desde (${maze.start.x}, ${maze.start.y})`,
+            stack: [...stack],
+            visited: [...visited],
+            currentCell: start
+        });
+
+        while (stack.length > 0) {
+            const current = stack.pop();
+            
+            if (visited.has(current)) continue;
+            
+            visited.add(current);
+            
+            steps.push({
+                type: 'visit',
+                node: current,
+                message: `Visitando celda (${current.split('-')[0]}, ${current.split('-')[1]})`,
+                stack: [...stack],
+                visited: [...visited],
+                currentCell: current
+            });
+
+            // Verificar si llegamos a la meta
+            if (current === end) {
+                steps.push({
+                    type: 'found',
+                    message: `¡Meta encontrada en (${maze.end.x}, ${maze.end.y})!`,
+                    stack: [...stack],
+                    visited: [...visited],
+                    currentCell: current,
+                    path: this.reconstructPath(parent, start, end)
+                });
+                break;
+            }
+
+            // Encontrar celdas adyacentes
+            const neighbors = this.getMazeNeighbors(current);
+            const newNeighbors = neighbors.filter(n => !visited.has(n) && !stack.includes(n));
+            
+            if (newNeighbors.length > 0) {
+                steps.push({
+                    type: 'discover',
+                    node: current,
+                    neighbors: newNeighbors,
+                    message: `Descubriendo celdas adyacentes: ${newNeighbors.map(n => `(${n.split('-')[0]}, ${n.split('-')[1]})`).join(', ')}`,
+                    stack: [...stack, ...newNeighbors.reverse()],
+                    visited: [...visited],
+                    currentCell: current
+                });
+            }
+
+            // Agregar vecinos a la pila (en orden inverso para mantener orden)
+            newNeighbors.reverse().forEach(neighbor => {
+                parent[neighbor] = current;
+                stack.push(neighbor);
+            });
+
+            steps.push({
+                type: 'stack_update',
+                node: current,
+                message: `Actualizando pila: [${stack.map(s => `(${s.split('-')[0]}, ${s.split('-')[1]})`).join(', ')}]`,
+                stack: [...stack],
+                visited: [...visited],
+                currentCell: current
+            });
+        }
+
+        this.animationSteps = steps;
+    }
+
+    reconstructPath(parent, start, end) {
+        const path = [];
+        let current = end;
+        
+        while (current !== start && parent[current]) {
+            path.unshift(current);
+            current = parent[current];
+        }
+        
+        if (current === start) {
+            path.unshift(start);
+        }
+        
+        return path;
+    }
+
+    executeNextStep() {
+        if (this.stepIndex >= this.animationSteps.length) {
+            this.isRunning = false;
+            document.getElementById('step-info').textContent = '¡Algoritmo completado!';
+            return;
+        }
+
+        const step = this.animationSteps[this.stepIndex];
+        this.executeStep(step);
+        
+        this.stepIndex++;
+        
+        if (this.isRunning) {
+            setTimeout(() => this.executeNextStep(), this.animationSpeed);
+        }
+    }
+
+    nextStep() {
+        if (this.animationSteps.length === 0) {
+            this.generateAnimationSteps();
+        }
+        
+        if (this.stepIndex < this.animationSteps.length) {
+            const step = this.animationSteps[this.stepIndex];
+            this.executeStep(step);
+            this.stepIndex++;
+        }
+    }
+
+    executeStep(step) {
+        // Actualizar información del paso
+        document.getElementById('step-info').textContent = step.message;
+        
+        // Actualizar cola/pila
+        const queueStackDisplay = document.getElementById('queue-display');
+        if (this.currentAlgorithm === 'bfs') {
+            queueStackDisplay.textContent = `Cola: [${step.queue ? step.queue.join(', ') : 'N/A'}]`;
+        } else {
+            queueStackDisplay.textContent = `Pila: [${step.stack ? step.stack.join(', ') : 'N/A'}]`;
+        }
+        
+        // Actualizar nodos visitados
+        document.getElementById('visited-display').textContent = `Visitados: [${step.visited.join(', ')}]`;
+
+        // Actualizar visualización del grafo
+        if (this.currentGraph.type === 'maze') {
+            this.executeMazeStep(step);
+        } else {
+            if (step.type === 'visit') {
+                // Marcar el nodo como visitado
+                this.highlightNode(step.node, 'visited');
+                // Resaltar temporalmente como actual
+                setTimeout(() => {
+                    this.highlightNode(step.node, 'visited');
+                }, 100);
+            } else if (step.type === 'discover') {
+                // Marcar el nodo actual como visitado
+                this.highlightNode(step.node, 'visited');
+                // Resaltar los vecinos descubiertos
+                step.neighbors.forEach((neighbor, index) => {
+                    setTimeout(() => {
+                        this.highlightNode(neighbor, 'current');
+                        // Resaltar la arista entre el nodo actual y el vecino
+                        this.highlightEdge(step.node, neighbor, 'current');
+                        // Después de un momento, marcar como visitado si ya está en la lista
+                        setTimeout(() => {
+                            if (step.visited.includes(neighbor)) {
+                                this.highlightNode(neighbor, 'visited');
+                                this.highlightEdge(step.node, neighbor, 'visited');
+                            }
+                        }, this.animationSpeed / 2);
+                    }, index * 200);
+                });
+            } else if (step.type === 'init') {
+                // Resaltar el nodo inicial
+                this.highlightNode(step.queue[0] || step.stack[0], 'current');
+            }
+        }
+    }
+
+    executeMazeStep(step) {
+        if (step.type === 'visit') {
+            // Marcar la celda como visitada
+            this.highlightMazeCell(step.currentCell, 'visited');
+        } else if (step.type === 'discover') {
+            // Marcar la celda actual como visitada
+            this.highlightMazeCell(step.currentCell, 'visited');
+            // Resaltar las celdas descubiertas
+            step.neighbors.forEach((neighbor, index) => {
+                setTimeout(() => {
+                    this.highlightMazeCell(neighbor, 'current');
+                }, index * 200);
+            });
+        } else if (step.type === 'init') {
+            // Resaltar la celda inicial
+            this.highlightMazeCell(step.currentCell, 'current');
+        } else if (step.type === 'found') {
+            // Mostrar el camino encontrado
+            this.highlightMazeCell(step.currentCell, 'visited');
+            if (step.path) {
+                step.path.forEach((cell, index) => {
+                    setTimeout(() => {
+                        this.highlightMazeCell(cell, 'path');
+                    }, index * 100);
+                });
+            }
+        }
+    }
+
+    highlightMazeCell(cellId, state) {
+        const cell = document.getElementById(`cell-${cellId}`);
+        if (cell) {
+            cell.setAttribute('class', `maze-cell ${state}`);
+        }
+    }
+
+    highlightNode(nodeId, state) {
+        const node = document.getElementById(`node-${nodeId}`);
+        if (node) {
+            // Establecer la nueva clase de estado
+            node.setAttribute('class', `node ${state}`);
+            
+            // Agregar efecto de pulso para nodos actuales
+            if (state === 'current') {
+                node.style.animation = 'pulse 0.8s infinite';
+            } else {
+                node.style.animation = 'none';
+            }
+        }
+    }
+
+    highlightEdge(fromNode, toNode, state) {
+        // Buscar la arista en ambas direcciones
+        let edge = document.getElementById(`edge-${fromNode}-${toNode}`);
+        if (!edge) {
+            edge = document.getElementById(`edge-${toNode}-${fromNode}`);
+        }
+        
+        if (edge) {
+            // Establecer la nueva clase de estado
+            edge.setAttribute('class', `edge ${state}`);
+        }
+    }
+}
+
+// Inicializar la aplicación cuando se carga la página
+document.addEventListener('DOMContentLoaded', () => {
+    new GraphVisualizer();
+});
+
+</script>
+</body>
+</html>
