@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Julio Bascuñán · Portafolio</title>
+<meta name="description" content="Desarrollador Full Stack de Arica, Chile. Más de 10 años creando juegos, apps industriales, IA y plataformas educativas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f6f2; --surface:#ffffff; --ink:#16161a; --muted:#5d5d66; --line:#e4e2db;
+  --accent:#e2572b; --accent-2:#1f7a8c; --chip:#efede6; --shadow:0 1px 2px rgba(0,0,0,.05),0 8px 24px rgba(0,0,0,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111114; --surface:#1a1a1f; --ink:#f1f0ec; --muted:#a3a2ab; --line:#2c2c33;
+    --accent:#ff7a4d; --accent-2:#4fb3c6; --chip:#24242b; --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111114; --surface:#1a1a1f; --ink:#f1f0ec; --muted:#a3a2ab; --line:#2c2c33;
+  --accent:#ff7a4d; --accent-2:#4fb3c6; --chip:#24242b; --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+h1,h2,h3{font-family:"Space Grotesk",Inter,sans-serif;line-height:1.15;margin:0}
+/* nav */
+nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:16px;height:60px}
+nav .logo{font-family:"Space Grotesk";font-weight:700;text-decoration:none;font-size:18px}
+nav .logo span{color:var(--accent)}
+nav .links{margin-left:auto;display:flex;gap:18px;font-size:14px}
+nav .links a{text-decoration:none;color:var(--muted)}
+nav .links a:hover{color:var(--ink)}
+#theme{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;width:36px;height:36px;cursor:pointer;font-size:16px}
+/* hero */
+.hero{padding:80px 0 56px}
+.hero .kicker{color:var(--accent);font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase}
+.hero h1{font-size:clamp(38px,7vw,72px);margin:12px 0 18px;letter-spacing:-.02em}
+.hero p{max-width:640px;color:var(--muted);font-size:18px;margin:0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:40px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.stat b{display:block;font-family:"Space Grotesk";font-size:32px}
+.stat span{color:var(--muted);font-size:14px}
+.cta{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;text-decoration:none;font-weight:600;font-size:15px;border:1px solid var(--line);background:var(--surface)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+/* section */
+section{padding:56px 0}
+.sec-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(28px,4vw,40px)}
+.sec-head p{color:var(--muted);margin:6px 0 0}
+/* featured */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.shot{aspect-ratio:16/10;position:relative;overflow:hidden;background:var(--chip)}
+.shot img{width:100%;height:100%;object-fit:cover;display:block}
+.ph{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:#fff;font-family:"Space Grotesk";font-weight:700}
+.ph .em{font-size:44px;display:block;margin-bottom:4px}
+.ph small{display:block;font-family:Inter;font-weight:500;font-size:12px;opacity:.8}
+.card .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card h3{font-size:19px}
+.card p{margin:0;color:var(--muted);font-size:14.5px}
+.meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
+.tag{font-size:12px;padding:3px 9px;border-radius:999px;background:var(--chip);color:var(--muted)}
+.tag.live{background:color-mix(in srgb,var(--accent-2) 18%,transparent);color:var(--accent-2);font-weight:600}
+.tag.priv{background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent)}
+/* filters */
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters button{border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:7px 14px;border-radius:999px;cursor:pointer;font:inherit;font-size:14px}
+.filters button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+/* timeline */
+.era{display:grid;grid-template-columns:200px 1fr;gap:28px;padding:28px 0;border-top:1px solid var(--line)}
+.era-label{position:sticky;top:80px;align-self:start}
+.era-label .yr{font-family:"Space Grotesk";font-size:34px;font-weight:700;color:var(--accent)}
+.era-label h3{font-size:18px;margin-top:4px}
+.era-label p{color:var(--muted);font-size:14px;margin:8px 0 0}
+.items{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.item{display:flex;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
+.item .thumb{width:96px;flex:none;aspect-ratio:1;border-radius:10px;overflow:hidden;position:relative;background:var(--chip)}
+.item .thumb img{width:100%;height:100%;object-fit:cover}
+.item .thumb .ph .em{font-size:30px;margin:0}
+.item h4{margin:0 0 2px;font-size:15.5px;font-family:"Space Grotesk"}
+.item p{margin:0 0 6px;color:var(--muted);font-size:13.5px;line-height:1.45}
+.item .meta{padding-top:0}
+.empty{color:var(--muted);font-size:14px}
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.skill{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.skill h3{font-size:16px;margin-bottom:10px}
+.skill .meta{padding:0}
+footer{padding:48px 0 64px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media (max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .skills{grid-template-columns:repeat(2,1fr)}
+  .era{grid-template-columns:1fr;gap:14px}
+  .era-label{position:static}
+}
+@media (max-width:620px){
+  nav .links{display:none}
+  nav #theme{margin-left:auto}
+  .hero{padding:48px 0 32px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .grid,.items,.skills{grid-template-columns:1fr}
+  .item .thumb{width:76px}
+}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="logo" href="#">julio<span>.</span>bascuñán</a>
+  <div class="links"><a href="#destacados">Destacados</a><a href="#evolucion">Evolución</a><a href="#habilidades">Habilidades</a><a href="#contacto">Contacto</a></div>
+  <button id="theme" aria-label="Cambiar tema">◐</button>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <div class="kicker">Desarrollador Full Stack · Arica, Chile</div>
+  <h1>Más de 10 años<br>construyendo cosas.</h1>
+  <p>Empecé en 2015 haciendo juegos en Construct 2 y RPG Maker. Hoy desarrollo plataformas educativas, juegos multijugador, sistemas de producción industrial e integraciones con IA. Esta es la historia, proyecto por proyecto.</p>
+  <div class="cta">
+    <a class="btn primary" href="#evolucion">Ver la evolución ↓</a>
+    <a class="btn" href="#contacto">Contacto</a>
+  </div>
+  <div class="stats" id="stats"></div>
+</div></header>
+
+<section id="destacados"><div class="wrap">
+  <div class="sec-head"><div><h2>Proyectos destacados</h2><p>Lo que mejor representa mi trabajo actual.</p></div></div>
+  <div class="grid" id="featured"></div>
+</div></section>
+
+<section id="evolucion"><div class="wrap">
+  <div class="sec-head">
+    <div><h2>Evolución desde 2015</h2><p>De pruebas en motores de juego a sistemas completos con IA.</p></div>
+    <div class="filters" id="filters"></div>
+  </div>
+  <div id="timeline"></div>
+</div></section>
+
+<section id="habilidades"><div class="wrap">
+  <div class="sec-head"><div><h2>Habilidades</h2><p>Tecnologías que he usado en proyectos reales.</p></div></div>
+  <div class="skills">
+    <div class="skill"><h3>Web y backend</h3><div class="meta"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">Django</span><span class="tag">Node.js</span><span class="tag">React</span><span class="tag">Next.js</span><span class="tag">TypeScript</span></div></div>
+    <div class="skill"><h3>Datos</h3><div class="meta"><span class="tag">SQL Server</span><span class="tag">PostgreSQL</span><span class="tag">Supabase</span><span class="tag">Power BI</span><span class="tag">R</span><span class="tag">ETL</span></div></div>
+    <div class="skill"><h3>Juegos y 3D</h3><div class="meta"><span class="tag">Roblox (Luau)</span><span class="tag">Unity</span><span class="tag">Three.js</span><span class="tag">Construct 2</span><span class="tag">Godot</span><span class="tag">Realidad aumentada</span></div></div>
+    <div class="skill"><h3>IA y hardware</h3><div class="meta"><span class="tag">Gemini</span><span class="tag">Llama local</span><span class="tag">NL2SQL</span><span class="tag">OpenCV</span><span class="tag">Playwright</span><span class="tag">ESP32 / IoT</span></div></div>
+  </div>
+</div></section>
+
+<footer id="contacto"><div class="wrap">
+  <div><strong style="color:var(--ink)">Julio Bascuñán</strong><br>Ingeniería en Informática · INACAP · Arica, Chile</div>
+  <div><a href="https://github.com/juliobascu">github.com/juliobascu</a></div>
+</div></footer>
+
+<script>
+/* ===== Datos =====
+   Capturas: guardar en capturas/<id>.png (o .jpg). Si no existe, se muestra un recuadro de color. */
+const CAT = {
+  juego:{n:"Juegos",em:"🎮",c:["#7b3fe4","#e2572b"]},
+  web:{n:"Web y apps",em:"🌐",c:["#1f7a8c","#2bb3a3"]},
+  industria:{n:"Industria",em:"🏭",c:["#3b4a6b","#5b7bb2"]},
+  ia:{n:"IA",em:"🧠",c:["#b03a6f","#f08a5d"]},
+  edu:{n:"Educación",em:"🎓",c:["#2f8f4e","#9bc53d"]},
+  uni:{n:"Universidad",em:"📚",c:["#6b4f2a","#c49a4c"]},
+};
+const ERAS = [
+  {id:"2015", yr:"2015–2019", t:"Los inicios", d:"Primeros programas y juegos con motores visuales. Aprender haciendo."},
+  {id:"2022", yr:"2022–2023", t:"INACAP y primeros sistemas", d:"Paso de los juegos a las bases de datos y los primeros sistemas para empresas."},
+  {id:"2024", yr:"2024", t:"Industria y universidad", d:"Apps de planta en Django y Flask, ramos de la universidad y muchas pruebas."},
+  {id:"2025", yr:"2025", t:"Sistemas completos", d:"Tesis Atenas 2.0, IA local, IoT y más de 20 apps en uso en planta."},
+  {id:"2026", yr:"2026", t:"Proyectos grandes", d:"Plataformas educativas en línea, juegos multijugador y Roblox publicado."},
+];
+// id, era, nombre, descripción, categoría, tecnologías, extras {star, live, priv}
+const P = [
+ ["contador","2015","Contador 0 a 9999","Mi primer programa: un contador.","web",["Programación básica"]],
+ ["rtype","2015","R-Type","Shooter espacial de naves con sprites propios.","juego",["Construct 2"]],
+ ["android-ar","2015","Pruebas de realidad aumentada","AR Meta, AR Plane y evaluación AR en Android.","juego",["Unity","Android","AR"]],
+ ["rpg-maker","2015","Dungeon RPG","Mazmorra con combate por turnos.","juego",["RPG Maker MV"]],
+
+ ["produccion-hora","2022","Producción por hora","Primer sistema de producción por hora: el origen de Atenas.","industria",["Flask","SQL Server"],{priv:1}],
+ ["lightship","2022","Lightship AR","Prueba de realidad aumentada con Niantic Lightship.","juego",["Unity","AR"]],
+ ["phishing","2022","Laboratorio de phishing","Demostración educativa de phishing para un ramo de seguridad.","uni",["Flask","Seguridad"]],
+ ["contenedores","2022","Gestión de contenedores","Control de contenedores y clientes, en varias versiones.","industria",["Django"],{priv:1}],
+ ["chatdatabase","2022","CanBot","Chatbot que responde preguntas consultando la base de datos de la empresa.","ia",["Python","Chatbot"]],
+
+ ["tablero-rol","2024","Tablero de Rol virtual","Tablero para jugar rol en línea; pasó de Docker a versión web.","juego",["Node.js","Docker"]],
+ ["cdr","2024","CDR","Proyecto de integración en equipo, con manuales.","uni",["Web","Trabajo en equipo"]],
+ ["numerica","2024","Métodos numéricos","Calculadoras de métodos numéricos con app de presentación.","uni",["Python","Web"]],
+ ["inacaptemplate","2024","INACAP Template","Plantilla web reutilizable.","web",["HTML","CSS"]],
+ ["rpg-clicker","2024","RPG Clicker","Juego clicker con progreso de RPG.","juego",["Django"]],
+ ["clickers","2024","Clickers JS","Varios juegos clicker para practicar.","juego",["JavaScript"]],
+ ["3d-react","2024","Escena 3D","Escena 3D interactiva en el navegador.","web",["React Three Fiber"]],
+ ["facewindow","2024","FaceWindow","Detección de rostros en tiempo real.","ia",["OpenCV","MediaPipe"]],
+ ["tablon","2024","Tablón de anuncios","Avisos internos para la planta.","industria",["Django"]],
+ ["todo","2024","Lista de tareas","Gestor de tareas para el equipo.","industria",["Django"]],
+ ["django-equipos","2024","Mapa de equipos","Mapa automático de equipos de la planta.","industria",["Django","Leaflet"]],
+ ["qr","2024","Generador de QR","Genera códigos QR para equipos y documentos.","web",["Django"]],
+ ["cristalpdf","2024","CristalPDF","Une varios PDF en uno.","web",["Flask"]],
+ ["unity-pruebas","2024","Pruebas en Unity","ML-Agents, construcción, ciudad, árbol RPG y VR.","juego",["Unity","VR","ML-Agents"]],
+
+ ["atenas-2","2025","Atenas 2.0 (tesis)","Producción por hora, metas, scrap, dashboard, consultas en lenguaje natural con IA, sensores ESP32 y AR.","industria",["Flask","SQL Server","IA","ESP32"],{star:1}],
+ ["5s","2025","App 5S","Checklist y evaluación 5S con fotos, firmas, correo y dashboard en Power BI.","industria",["Flask","SQL Server","Power BI"],{star:1,priv:1}],
+ ["ergon","2025","ERGON Plataforma CES","Plataforma de capacitaciones empresariales.","edu",["Web"]],
+ ["historico","2025","Histórico de producción","Dashboard histórico con filtros.","industria",["Python","SQL Server"],{priv:1}],
+ ["orion-ai","2025","ORION AI","Asistente que escribe SQL con IA local (Llama 3).","ia",["Llama 3","Python","SQL"]],
+ ["pantallas","2025","Pantallas de planta","Pantallas informativas en tiempo real.","industria",["Django"]],
+ ["sensor-agua","2025","Sensor de agua WiFi","ESP32 que mide el nivel de un tambor y lo muestra en un dashboard.","industria",["ESP32","IoT"]],
+ ["sala-agua","2025","Sala de agua","Registro diario en 10 pestañas.","industria",["Flask"]],
+ ["mecanicos","2025","Reportes de mecánicos","Reportes con fotos desde el celular.","industria",["Flask"]],
+ ["lups","2025","LUPs digital","Registro de capacitaciones y actas.","industria",["Flask"]],
+ ["compras","2025","Análisis de compras","Analizador de salidas de inventario.","industria",["Python","Pandas"]],
+ ["monitor","2025","Monitor de carpetas","Avisa por correo cuando llegan archivos.","industria",["Python","watchdog"]],
+ ["bfs-dfs","2025","BFS y DFS","Visualizador de algoritmos de búsqueda.","uni",["JavaScript","Algoritmos"]],
+ ["gacha","2025","RNG Gacha","Juego de gachapon con colección.","juego",["JavaScript"]],
+ ["guerra-tiempo","2025","Guerra de Tiempo","Estrategia de aldeas estilo navegador.","juego",["Web"]],
+ ["sky","2025","Sky 3D Chat","Chat 3D en tiempo real.","web",["Three.js","WebSockets"]],
+ ["cockpit","2025","Cockpit SC","Panel táctil para simuladores espaciales.","web",["Web"]],
+ ["lifegamer","2025","LifeGamer","Gamifica tu vida: metas como juego, con asistente Gemini.","ia",["Gemini","Web"]],
+ ["julioflix","2025","Julioflix","Catálogo de películas estilo streaming.","web",["Web"]],
+
+ ["pixelito","2026","Pixelito","Creador de juegos para niños con voz, tutoriales y cuaderno.","edu",["React","Supabase","Voz"],{star:1,live:"https://pixelito.vercel.app"}],
+ ["robopy","2026","RoboPy","Aprende Python programando un robot, en 49 niveles.","edu",["Python","Web"],{star:1,live:1}],
+ ["veil-hunters","2026","Veil Hunters RPG","RPG publicado en Roblox.","juego",["Roblox","Luau"],{star:1,live:1}],
+ ["atenas-hexagon","2026","Atenas Hexagon","Capacitación técnica: laboratorio 3D de cableado, evaluación por roles, PWA.","edu",["React","3D","PWA"],{star:1,priv:1}],
+ ["hacienda-pixel","2026","Hacienda Pixel","Juego incremental de hacienda multijugador.","juego",["Node.js","PostgreSQL"],{star:1}],
+ ["viento-bound","2026","Viento Bound","Artillería por turnos multijugador para celular.","juego",["Node.js","WebSockets"],{star:1}],
+ ["chauchera","2026","Chauchera","App de micropagos.","web",["Next.js","Supabase"]],
+ ["sap-academy","2026","SAP Academy","Curso de SAP en la web.","edu",["Next.js","Supabase"]],
+ ["arce-online","2026","Arce Online","RPG de plataformas multijugador para celular.","juego",["Node.js","WebSockets"]],
+ ["mina","2026","Mina Incremental","Juego idle de minería con guardado en la nube.","juego",["React","TypeScript","Supabase"]],
+ ["autochecklist","2026","AutoChecklist","Audio y fotos → informe con Gemini → un robot llena el portal.","ia",["Gemini","Playwright"]],
+ ["tds","2026","TDS Training Simulator","Simulador de auditoría de sistemas por vehículo.","edu",["Web"],{priv:1}],
+ ["egg-drop","2026","Egg Drop","Simulador en Roblox.","juego",["Roblox","Luau"]],
+ ["movimiento-rivals","2026","Movimiento Rivals","Sistema de movimiento avanzado para Roblox.","juego",["Roblox","Luau"]],
+ ["inspiration","2026","Inspiration","Generador de progresiones de acordes para componer.","web",["Python","SCAMP"]],
+ ["extensiones","2026","Extensiones de Chrome","Limpiador de anuncios y extractor de modelos 3D.","web",["JavaScript","Chrome"]],
+ ["clickbot","2026","ClickBot","Tester de bots para Roblox con visión por computador.","ia",["OpenCV","Python"]],
+ ["atenas-ar","2026","Atenas AR","Realidad aumentada para la planta.","industria",["Unity","AR"]],
+].map(([id,era,name,desc,cat,tech,x={}])=>({id,era,name,desc,cat,tech,...x}));
+
+/* ===== Render ===== */
+const $ = s=>document.querySelector(s);
+function shot(p){
+  const c = CAT[p.cat];
+  return `<div class="ph" style="background:linear-gradient(135deg,${c.c[0]},${c.c[1]})"><div><span class="em">${c.em}</span>${p.name}<small>captura pronto</small></div></div>
+  <img src="capturas/${p.id}.png" alt="Captura de ${p.name}" loading="lazy" onerror="if(!this.dataset.j){this.dataset.j=1;this.src='capturas/${p.id}.jpg'}else{this.remove()}">`;
+}
+function tags(p){
+  let t = p.tech.map(x=>`<span class="tag">${x}</span>`).join("");
+  if(p.live) t = (typeof p.live==="string" ? `<a class="tag live" href="${p.live}" target="_blank" rel="noopener">● En línea</a>` : `<span class="tag live">● Publicado</span>`) + t;
+  if(p.priv) t += `<span class="tag priv">Uso interno</span>`;
+  return t;
+}
+$("#featured").innerHTML = P.filter(p=>p.star).map(p=>`
+  <article class="card"><div class="shot">${shot(p)}</div>
+  <div class="body"><h3>${p.name}</h3><p>${p.desc}</p><div class="meta"><span class="tag">${ERAS.find(e=>e.id===p.era).yr}</span>${tags(p)}</div></div></article>`).join("");
+
+const years = 2026-2015;
+$("#stats").innerHTML = [
+  [years+"+","años programando"],[P.length,"proyectos en esta página"],
+  [P.filter(p=>p.cat==="juego").length,"juegos y prototipos"],[P.filter(p=>p.cat==="industria").length,"apps industriales"]
+].map(([b,s])=>`<div class="stat"><b>${b}</b><span>${s}</span></div>`).join("");
+
+let filtro = "todo";
+$("#filters").innerHTML = [["todo","Todo"],...Object.entries(CAT).map(([k,v])=>[k,v.n])]
+  .map(([k,n])=>`<button data-k="${k}" class="${k==="todo"?"on":""}">${n}</button>`).join("");
+$("#filters").onclick = e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  filtro = b.dataset.k;
+  document.querySelectorAll("#filters button").forEach(x=>x.classList.toggle("on",x===b));
+  drawTimeline();
+};
+function drawTimeline(){
+  $("#timeline").innerHTML = ERAS.map(e=>{
+    const items = P.filter(p=>p.era===e.id && (filtro==="todo"||p.cat===filtro));
+    return `<div class="era"><div class="era-label"><div class="yr">${e.yr}</div><h3>${e.t}</h3><p>${e.d}</p></div>
+      <div class="items">${items.length? items.map(p=>`
+        <div class="item"><div class="thumb">${shot(p).replace(/<small>.*?<\/small>/,"").replace(p.name+"<","<")}</div>
+        <div><h4>${p.name}</h4><p>${p.desc}</p><div class="meta">${tags(p)}</div></div></div>`).join("")
+        : `<p class="empty">Sin proyectos de este tipo en esta etapa.</p>`}</div></div>`;
+  }).join("");
+}
+drawTimeline();
+
+/* tema */
+const root = document.documentElement;
+try{ const t = localStorage.getItem("tema"); if(t) root.dataset.theme = t; }catch(e){}
+$("#theme").onclick = ()=>{
+  const dark = root.dataset.theme ? root.dataset.theme==="dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  root.dataset.theme = dark ? "light" : "dark";
+  try{ localStorage.setItem("tema", root.dataset.theme); }catch(e){}
+};
+</script>
+</body>
+</html>
