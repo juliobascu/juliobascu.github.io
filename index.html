@@ -1183,7 +1183,7 @@ scene.add(new THREE.HemisphereLight(0xffd0b0,0x46302a,.6));
 const warm=new THREE.PointLight(0xffc896,2.8,7.5,1.6); warm.position.set(.2,2.05,1.6); scene.add(warm);
 const musicLight=new THREE.PointLight(0xff8a4a,1.2,2.6,2); musicLight.position.set(-2.1,1.9,.2); scene.add(musicLight);
 const shelfLight=new THREE.PointLight(0xffd9a8,.9,2,2); shelfLight.position.set(2.3,1.9,.1); scene.add(shelfLight);
-[shelfLight,musicLight,tvGlow,lavaLight,windowGlow].forEach(l=>l.visible=false); warm.intensity=3.4;
+[shelfLight,musicLight,tvGlow,lavaLight,windowGlow,lampFill,neonLight].forEach(l=>l.visible=false); warm.intensity=3.4;
 
 /* ---------- pantallas animadas ---------- */
 const clouds=[[40,60],[300,40],[180,110],[420,90]];
@@ -1309,7 +1309,7 @@ window.__room={
 
 /* ---------- bucle ---------- */
 const clock=new THREE.Clock(); let scrAcc=0;
-let fpsN=0, fpsT=0;
+let fpsN=0, fpsT=0, scrI=0;
 function frame(){
   requestAnimationFrame(frame);
   if(paused) return;
@@ -1331,7 +1331,7 @@ function frame(){
   window.__zl=__now;
   camera.position.copy(camPos); camera.lookAt(look);
 
-  scrAcc+=dt; if(scrAcc>.12){ scrAcc=0; drawScreen(t); drawGB(t); drawCity(); drawTV(t); }
+  scrAcc+=dt; if(scrAcc>.06){ scrAcc=0; scrI=(scrI+1)%4; if(scrI===0)drawScreen(t); else if(scrI===1)drawGB(t); else if(scrI===2)drawCity(); else drawTV(t); }
   consLed.material.color.setHex((t*2|0)%2?0xff3344:0x551119);
   led.material.color.setHex((t*3|0)%5?0x33ff66:0x114422);
   screenGlow.intensity=1.0+Math.sin(t*20)*.04+Math.sin(t*3)*.08;
