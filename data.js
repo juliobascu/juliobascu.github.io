@@ -43,7 +43,7 @@ const P = [
  ["cristalpdf","2024","CristalPDF","Une varios PDF en uno.","web",["Flask"]],
  ["unity-pruebas","2024","Pruebas en Unity","ML-Agents, construcción, ciudad, árbol RPG y VR.","juego",["Unity","VR","ML-Agents"]],
 
- ["atenas-2","2025","Atenas 2.0 (tesis)","Sistema de planta que registra la producción por hora, metas, scrap y paradas. Tiene dashboard y reportes, consultas a la base de datos en lenguaje natural con IA, sensores IoT ESP32 y vista en realidad aumentada. Mi proyecto de título.","industria",["Flask","SQL Server","IA","ESP32"],{star:1,priv:1,emp:1}],
+ ["atenas-2","2025","Atenas 2.0 (tesis)","Sistema de planta hecho para Condensa que registra la producción por hora, metas, scrap y paradas. Tiene dashboard y reportes, consultas a la base de datos en lenguaje natural con IA, sensores IoT ESP32 y vista en realidad aumentada. Mi proyecto de título.","industria",["Flask","SQL Server","IA","ESP32"],{star:1,priv:1,emp:1}],
  ["horas-extras","2025","Permisos y horas extra","Los trabajadores piden permisos y horas extra en línea. Cuenta días compensatorios con los feriados de Chile, guarda el historial y genera el formulario administrativo para imprimir.","industria",["Django","SQL Server"],{star:1,priv:1,emp:2}],
  ["solicitudes-proyectos","2025","Solicitudes de proyectos de ingeniería","Formulario y panel para pedir, revisar y seguir proyectos del área de ingeniería, con número de requerimiento, presupuestos y documentos adjuntos.","industria",["Flask","SQL Server"],{priv:1,emp:6}],
  ["fichas-producto","2025","Fichas de producto por línea","Visor de fichas técnicas en PDF por código de producto, ordenado por línea de producción.","industria",["Flask"],{priv:1,emp:9}],
