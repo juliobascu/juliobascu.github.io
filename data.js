@@ -51,7 +51,7 @@ const P = [
  ["entrega-equipos","2025","Entrega de equipos TI","Acta de entrega de equipos con fotos y firma digital de quien entrega y de quien recibe.","industria",["Flask"],{priv:1,emp:11}],
  ["evaluacion-proyectos","2025","Evaluación de proyectos","Modelo financiero para evaluar proyectos que exporta a Excel.","industria",["Python","Excel"],{priv:1,emp:13}],
  ["5s","2025","App 5S","Checklist y evaluación 5S por área y zona, con fotos, firmas, envío por correo, impresión y dashboard en Power BI.","industria",["Flask","SQL Server","Power BI"],{star:1,priv:1,emp:3}],
- ["ergon","2025","ERGON Plataforma CES","Plataforma de capacitaciones: secciones, materiales descargables y panel de administración.","edu",["Flask","SQLite"]],
+ ["ergon","2025","ERGON Plataforma CES","Plataforma de capacitaciones: secciones, materiales descargables y panel de administración.","edu",["Flask","SQLite"],{live:"https://ergon-ces.vercel.app"}],
  ["historico","2025","Histórico de producción","Dashboard de análisis histórico: filtros por fecha, línea y código, KPIs de eficiencia, gráficos y exportación a Excel.","industria",["Flask","SQL Server","Chart.js"],{priv:1,emp:4}],
  ["orion-ai","2025","ORION AI","Asistente que escribe SQL con IA local (Llama 3).","ia",["Llama 3","Python","SQL"]],
  ["pantallas","2025","Pantallas de planta","Carrusel de avisos, videos e indicadores para cada pantalla de la planta, administrado desde un panel.","industria",["Django"],{priv:1,emp:7}],
